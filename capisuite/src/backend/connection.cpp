@@ -2,7 +2,7 @@
     @brief Contains Connection - Encapsulates a CAPI connection with all its states and methods.
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.11.2.1 $
+    $Revision: 1.11.2.2 $
 */
 
 /***************************************************************************
@@ -27,18 +27,19 @@
 
 using namespace std;
 
-Connection::Connection (_cmsg& message, Capi* capi_in):
-	call_if(NULL),capi(capi_in),plci_state(P2),ncci_state(N0), buffer_start(0), buffers_used(0),
+Connection::Connection (_cmsg& message, Capi *capi):
+	call_if(NULL),capi(capi),plci_state(P2),ncci_state(N0), buffer_start(0), buffers_used(0),
 	file_for_reception(NULL), file_to_send(NULL), received_dtmf(""), keepPhysicalConnection(false),
 	disconnect_cause(0),debug(capi->debug), debug_level(capi->debug_level), error(capi->error),
-	our_call(false), disconnect_cause_b3(0), fax_info(NULL)
+	our_call(false), disconnect_cause_b3(0), fax_info(NULL) 
 {
 	pthread_mutex_init(&send_mutex, NULL);
 	pthread_mutex_init(&receive_mutex, NULL);
 
 	plci=CONNECT_IND_PLCI(&message); // Physical Link Connection Identifier
 	call_from = getNumber(CONNECT_IND_CALLINGPARTYNUMBER(&message),true);
-  	call_to   = getNumber(CONNECT_IND_CALLEDPARTYNUMBER(&message),false);
+	call_to   = getNumber(CONNECT_IND_CALLEDPARTYNUMBER(&message),false);
+
 	if (debug_level >= 1) {
 		debug << prefix() << "Connection object created for incoming call PLCI " << plci;
 		debug << " from " << call_from << " to " << call_to << " CIP 0x" << hex << CONNECT_IND_CIPVALUE(&message) << endl;
@@ -1082,6 +1083,9 @@ Connection::convertToCP437(string &text)
 /*  History
 
 $Log: connection.cpp,v $
+Revision 1.11.2.2  2003/10/26 16:52:55  gernot
+- begin implementation of DDI; get DDI info elements
+
 Revision 1.11.2.1  2003/07/20 19:08:44  gernot
 - added missing include of errno.h
 
