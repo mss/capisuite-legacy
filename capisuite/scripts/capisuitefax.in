@@ -192,7 +192,7 @@ for i in args:
 
 	newname=cs_helpers.uniqueName(sendq,"fax","sff")
 
-	command="gs -dNOPAUSE -dQUIET -dBATCH -aPAPERSIZE=a4 -sDEVICE=cfax -sOutputFile=" \
+	command="gs -dNOPAUSE -dQUIET -dBATCH -sPAPERSIZE=a4 -sDEVICE=cfax -sOutputFile=" \
 	  + newname+" "+cs_helpers.escape(i)
 	ret=(os.system(command))>>8
 	if (ret):
