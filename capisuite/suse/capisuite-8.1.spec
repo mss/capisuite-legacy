@@ -19,7 +19,7 @@ Name:         capisuite
 License:      GPL
 Group:        Hardware/ISDN
 Autoreqprov:  on
-Version:      0.4.3  
+Version:      0.4.4  
 Release:      0
 Requires:     sfftobmp sox tiff ghostscript-library
 Summary:      ISDN telecommunication suite providing fax and voice services
@@ -57,7 +57,7 @@ mkdir -p $RPM_BUILD_ROOT/usr/sbin
 mkdir -p $RPM_BUILD_ROOT/etc/cron.daily
 install -g root -m 644 -o root cronjob.conf $RPM_BUILD_ROOT/etc/capisuite/cronjob.conf
 install -g root -m 755 -o root rc.capisuite $RPM_BUILD_ROOT/etc/init.d/capisuite
-install -g root -o 755 -o root capisuite.cron $RPM_BUILD_ROOT/etc/cron.daily/capisuite
+install -g root -m 755 -o root capisuite.cron $RPM_BUILD_ROOT/etc/cron.daily/capisuite
 ln -sf ../../etc/init.d/capisuite $RPM_BUILD_ROOT/usr/sbin/rccapisuite
 
 %clean
@@ -86,6 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/sbin/rccapisuite
 
 %changelog -n capisuite
+* Sun Jan 18 2004 - gernot@hillier.de
+- updated to 0.4.4
 * Sun Jul 20 2003 - gernot@hillier.de
 - updated to 0.4.3
 * Sun Apr 27 2003 - gernot@hillier.de
