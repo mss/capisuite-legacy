@@ -1,3 +1,7 @@
+2004-11-26  Gernot Hillier  <gernot@hillier.de>
+	* docs/Makefile.am: add man-pages to distribution, hopefully finally
+	  avoid to have them created during normal build
+
 2004-11-07  Gernot Hillier  <gernot@hillier.de>
 	* configure.in: test for the sfftobmp version installed
 	* acinclude.m4 (CS_TEST_SFFTOBMP): Likewise.
