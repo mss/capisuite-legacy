@@ -6,8 +6,7 @@ man_MANS = capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capi
 # dist-hook may be not portable partly, so non-SuSE-users please
 # forgive me and don't call "make dist" or send me a patch ;-)
 
-# removed manual-pdf as it currently doesn't work, will be reactivated soon
-dist-hook: cleandoc manual-html reference-html capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1
+dist-hook: cleandoc manual-html reference-html capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1 manual-pdf
 	mkdir $(distdir)/manual
 	cp -r $(srcdir)/manual/* $(distdir)/manual/
 	mkdir $(distdir)/reference
