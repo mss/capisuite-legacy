@@ -45,7 +45,7 @@ CallModule::callDisconnectedLogical()
 }
 
 void
-CallModule::mainLoop() throw (CapiWrongState, CapiMsgError, CapiExternalError)
+CallModule::mainLoop() throw (CapiWrongState,CapiMsgError,CapiExternalError,CapiError)
 {
 	if (! (DTMF_exit && (conn->getDTMF()!="") ) ) {
 		exit_time=getTime()+timeout;

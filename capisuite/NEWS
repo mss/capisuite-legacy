@@ -1,5 +1,8 @@
 0.4.5:
 ======
+	* documentation: 5 man pages are now also created: capisuite(8),
+	  capisuite.conf(5), fax.conf(5), answering_machine.conf(5),
+	  capisuitefax(1) (fixes bug #13, thx to Achim Bohnet for reporting)
 
 	* scripts: prevent cropping of fax pages by auto-scaling
 
@@ -11,6 +14,12 @@
 
 	* core: behave correctly when DATA_B3_CONF messages come early (thx to
 	  Karsten Keil for analyzing and a nice fix!)
+
+	* scripts: capisuitefax now also accepts PDF files (thx to Jochen Meyer
+	  and Eckhard Rüggeberg for reporting)
+
+	* core: fixed a bug which could lead to a crash when some unexpected
+	  CAPI messages arrived (thx to Karsten Keil for analyzing)
 
 	* core: fixed compile problem with new capi4linux library
 

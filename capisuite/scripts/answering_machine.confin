@@ -129,13 +129,13 @@ record_silence_timeout="5"
 #                 be recorded
 #
 # Here's an example of a valid user configuration for "gernot" - just remove
-# the leading #-signs and edit it:
+# the leading #-signs and edit it (don't forget to change the pin!!):
 #
-# [gernot]
-# voice_numbers="13,14"
-# voice_action="MailAndSave"
-# voice_delay="10"
-# record_length="60"
-# voice_email=""
-# pin="99*45"
+#[gernot]
+#voice_numbers="13,14"
+#voice_action="MailAndSave"
+#voice_delay="10"
+#record_length="60"
+#voice_email=""
+#pin="99*45"
 

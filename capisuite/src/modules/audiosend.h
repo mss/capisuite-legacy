@@ -54,8 +54,10 @@ class AudioSend: public CallModule
 		    @throw CapiWrongState Thrown when disconnection takes place.
 		    @throw CapiExternalError Thrown by Connection::start_file_transmission, see there for explanation.
 		    @throw CapiMsgError Thrown by Connection::start_file_transmission, see there for explanation.
+		    @throw CapiError Thrown by Connection::start_file_transmission, see there for explan
+ation.
   		*/
-		void mainLoop() throw (CapiWrongState, CapiExternalError, CapiMsgError);
+		void mainLoop() throw (CapiError,CapiWrongState,CapiExternalError,CapiMsgError);
 
  		/** @brief finish main loop if file is completely received
 

@@ -17,6 +17,7 @@
 // IMPORTANT: every python function MUST call PyErr_Occured() before using the associated
 // Connection object! (connection can be already deleted while the python script is still running
 
+#include <Python.h>
 #include <string>
 #include <unistd.h> // for sleep()
 #include "../backend/connection.h"
@@ -239,6 +240,11 @@ capisuite_audio_send(PyObject*, PyObject *args)
 		PyErr_SetString(BackendError,(e.message()).c_str());
 		return NULL;
 	}
+	catch (CapiError e) {
+		Py_BLOCK_THREADS
+		PyErr_SetString(BackendError,(e.message()).c_str());
+		return NULL;
+	}
 
 	PyObject *r=PyInt_FromLong(duration);
 	return (r);
@@ -383,6 +389,16 @@ capisuite_fax_send(PyObject *, PyObject *args)
 	catch (CapiWrongState e) {
 		Py_BLOCK_THREADS
 		PyErr_SetString(CallGoneError,"Call was finished from partner.");
+		return NULL;
+	}
+	catch (CapiMsgError e) {
+		Py_BLOCK_THREADS
+		PyErr_SetString(BackendError,(e.message()).c_str());
+		return NULL;
+	}
+	catch (CapiExternalError e) {
+		Py_BLOCK_THREADS
+		PyErr_SetString(BackendError,(e.message()).c_str());
 		return NULL;
 	}
 	catch (CapiError e) {

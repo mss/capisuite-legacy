@@ -148,10 +148,10 @@ fax_headline="Sent by CapiSuite (www.CapiSuite.de)"
 # Here's an example of a valid user configuration for "gernot" - just remove
 # the leading #-signs and edit it:
 #
-# [gernot]
-# fax_numbers="11,12"
-# fax_stationID="+49 89 123456"
-# fax_headline="Gernot Hillier - sent by CapiSuite"
-# fax_email=""
-# fax_action="MailAndSave"
+#[gernot]
+#fax_numbers="11,12"
+#fax_stationID="+49 89 123456"
+#fax_headline="Gernot Hillier - sent by CapiSuite"
+#fax_email=""
+#fax_action="MailAndSave"
 

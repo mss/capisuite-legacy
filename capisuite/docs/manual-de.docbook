@@ -5,7 +5,7 @@
 <!ENTITY cs "<application>CapiSuite</application>">
 ]>
 <book lang="de">
-<title>CapiSuite 0.4.4</title>
+<title>CapiSuite 0.4.5</title>
 <subtitle><ulink url="http://www.capisuite.de"/></subtitle>
 
 
@@ -99,7 +99,7 @@
         einzelne Klasse, jede Methode und jedes Attribut. Da er automatisch aus den Sourcen von &cs; 
         erstellt wird, ist er nicht Teil dieses Dokuments. Sie finden ihn entweder lokal unter
 		<ulink url="../reference/index.html"/> oder online unter
-		<ulink url="http://www.capisuite.de/capisuite/reference/index.html"/>.</para>
+		<ulink url="http://www.capisuite.de/reference/index.html"/>.</para>
 
 		<para>Es gibt dort auch noch einige zusätzliche Teile, in denen "was ich sonst noch sagen wollte"
         enthalten ist:</para>
@@ -2649,7 +2649,7 @@ def idle(capi):<co id="idle_ex2_4"/>
 		<para>Eine komplette Referenz aller Funktionen dieses Moduls wird automatisch aus den &cs;-Sourcen
         generiert, sodass Sie es im Referenzhandbuch lokal unter
         <ulink url="../reference/group__python.html"/> oder online unter
-		<ulink url="http://www.capisuite.de/capisuite/reference/group__python.html"/> finden.</para>
+		<ulink url="http://www.capisuite.de/reference/group__python.html"/> finden.</para>
 
 		<para>Da es keinen Sinn macht, die Informationen hier doppelt zu halten, schauen Sie sie sich bitte
         dort an.</para>
@@ -2711,7 +2711,7 @@ def idle(capi):<co id="idle_ex2_4"/>
 	Skript-Schreiber interessant, da sie von einigen &cs;-Python-Funktionen zurück gegeben werden.
 	Siehe <xref linkend="command_reference"/> für weitere Details.</para>
 
-	<section id="capicodes_protocol"><title>Protololl-Fehler</title>
+	<section id="capicodes_protocol"><title>Protokoll-Fehler</title>
 		<para>Protokoll-Fehler deuten auf übertragungsfehler hin. Es werden hier nur Meldungen des 
 		transparenten (Sprache) und des Fax-Protokolls, die von &cs; gesprochen werden, angezeigt.</para>
 

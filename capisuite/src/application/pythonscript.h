@@ -17,8 +17,9 @@
 #ifndef PYTHONSCRIPT_H
 #define PYTHONSCRIPT_H
 
-#include <../../config.h>
 #include <Python.h>
+
+#include "../../config.h"
 #ifdef HAVE_OSTREAM
   #include <ostream>
 #else

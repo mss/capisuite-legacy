@@ -45,6 +45,13 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
+man1dir = $(mandir)/man1
+am__installdirs = "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(man5dir)" \
+	"$(DESTDIR)$(man8dir)"
+man5dir = $(mandir)/man5
+man8dir = $(mandir)/man8
+NROFF = nroff
+MANS = $(man_MANS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
@@ -145,7 +152,8 @@ sfftobmp_major_version = @sfftobmp_major_version@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-EXTRA_DIST = Doxyfile.in mainpage.doxy manual.docbook manual.README
+EXTRA_DIST = Doxyfile.in mainpage.doxy manual.docbook manual.README $(man_MANS)
+man_MANS = capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1
 all: all-am
 
 .SUFFIXES:
@@ -179,6 +187,141 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 uninstall-info-am:
+install-man1: $(man1_MANS) $(man_MANS)
+	@$(NORMAL_INSTALL)
+	test -z "$(man1dir)" || $(mkdir_p) "$(DESTDIR)$(man1dir)"
+	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.1*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
+	  else file=$$i; fi; \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    1*) ;; \
+	    *) ext='1' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man1dir)/$$inst'"; \
+	  $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man1dir)/$$inst"; \
+	done
+uninstall-man1:
+	@$(NORMAL_UNINSTALL)
+	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.1*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    1*) ;; \
+	    *) ext='1' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " rm -f '$(DESTDIR)$(man1dir)/$$inst'"; \
+	  rm -f "$(DESTDIR)$(man1dir)/$$inst"; \
+	done
+install-man5: $(man5_MANS) $(man_MANS)
+	@$(NORMAL_INSTALL)
+	test -z "$(man5dir)" || $(mkdir_p) "$(DESTDIR)$(man5dir)"
+	@list='$(man5_MANS) $(dist_man5_MANS) $(nodist_man5_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.5*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
+	  else file=$$i; fi; \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    5*) ;; \
+	    *) ext='5' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man5dir)/$$inst'"; \
+	  $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man5dir)/$$inst"; \
+	done
+uninstall-man5:
+	@$(NORMAL_UNINSTALL)
+	@list='$(man5_MANS) $(dist_man5_MANS) $(nodist_man5_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.5*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    5*) ;; \
+	    *) ext='5' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " rm -f '$(DESTDIR)$(man5dir)/$$inst'"; \
+	  rm -f "$(DESTDIR)$(man5dir)/$$inst"; \
+	done
+install-man8: $(man8_MANS) $(man_MANS)
+	@$(NORMAL_INSTALL)
+	test -z "$(man8dir)" || $(mkdir_p) "$(DESTDIR)$(man8dir)"
+	@list='$(man8_MANS) $(dist_man8_MANS) $(nodist_man8_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.8*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
+	  else file=$$i; fi; \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    8*) ;; \
+	    *) ext='8' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man8dir)/$$inst'"; \
+	  $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man8dir)/$$inst"; \
+	done
+uninstall-man8:
+	@$(NORMAL_UNINSTALL)
+	@list='$(man8_MANS) $(dist_man8_MANS) $(nodist_man8_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.8*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    8*) ;; \
+	    *) ext='8' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " rm -f '$(DESTDIR)$(man8dir)/$$inst'"; \
+	  rm -f "$(DESTDIR)$(man8dir)/$$inst"; \
+	done
 tags: TAGS
 TAGS:
 
@@ -218,8 +361,11 @@ distdir: $(DISTFILES)
 	  dist-hook
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(MANS)
 installdirs:
+	for dir in "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(man5dir)" "$(DESTDIR)$(man8dir)"; do \
+	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -262,13 +408,13 @@ info: info-am
 
 info-am:
 
-install-data-am: install-data-local
+install-data-am: install-data-local install-man
 
 install-exec-am:
 
 install-info: install-info-am
 
-install-man:
+install-man: install-man1 install-man5 install-man8
 
 installcheck-am:
 
@@ -289,45 +435,72 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-local
+uninstall-am: uninstall-info-am uninstall-local uninstall-man
+
+uninstall-man: uninstall-man1 uninstall-man5 uninstall-man8
 
 .PHONY: all all-am check check-am clean clean-generic dist-hook \
 	distclean distclean-generic distdir dvi dvi-am html html-am \
 	info info-am install install-am install-data install-data-am \
 	install-data-local install-exec install-exec-am install-info \
-	install-info-am install-man install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic maintainer-clean-local mostlyclean \
-	mostlyclean-generic pdf pdf-am ps ps-am uninstall uninstall-am \
-	uninstall-info-am uninstall-local
+	install-info-am install-man install-man1 install-man5 \
+	install-man8 install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	maintainer-clean-local mostlyclean mostlyclean-generic pdf \
+	pdf-am ps ps-am uninstall uninstall-am uninstall-info-am \
+	uninstall-local uninstall-man uninstall-man1 uninstall-man5 \
+	uninstall-man8
 
 
 # dist-hook may be not portable partly, so non-SuSE-users please
 # forgive me and don't call "make dist" or send me a patch ;-)
 
-dist-hook: manual-html manual-pdf reference-html
+# removed manual-pdf as it currently doesn't work, will be reactivated soon
+dist-hook: cleandoc manual-html reference-html capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1
 	mkdir $(distdir)/manual
 	cp -r $(srcdir)/manual/* $(distdir)/manual/
 	mkdir $(distdir)/reference
 	cp $(srcdir)/reference/* $(distdir)/reference/
 	cp manual.pdf $(distdir)/
 
-manual-html:
+# force recreation of complete manual for dist
+cleandoc:
+	-rm manual.docbook
+
+manual.docbook: manual.docbook.in
 	sed -e 's,<title>CapiSuite [0-9a-z\.]*</title>,<title>CapiSuite $(VERSION)</title>,g' \
-	  manual.docbook > manual.new # (not another *.in file...)
-	mv manual.new manual.docbook
+	  manual.docbook.in > manual.docbook
 	xmllint --noout --valid manual.docbook
-	xsltproc -o manual/ /usr/share/sgml/docbook/docbook-xsl-stylesheets/xhtml/chunk.xsl manual.docbook # create HTML
-	cp -r /usr/share/sgml/docbook/docbook-xsl-stylesheets/images/ manual/ # missing images...
+
+manual-html: manual.docbook
+	xsltproc --stringparam profile.condition html -o manual-profiled.docbook \
+	  /usr/share/xml/docbook/stylesheet/nwalsh/current/profiling/profile.xsl \
+	  manual.docbook
+	xsltproc --stringparam chunker.output.encoding UTF-8 \
+	  --stringparam chunker.output.doctype-public "-//W3C//DTD XHTML 1.0 Transitional//EN" \
+	  --stringparam chunker.output.doctype-system "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" \
+	  -o manual/ /usr/share/xml/docbook/stylesheet/nwalsh/current/xhtml/chunk.xsl manual-profiled.docbook
+	rm manual-profiled.docbook
+	cp -r /usr/share/xml/docbook/stylesheet/nwalsh/current/images/ manual/ # missing images...
 	if test ! -d manual/images/callouts; then \
-		echo "manual pages weren't created succesful." ;\
+		echo "manual wasn't created succesful." ;\
 		exit 1; \
 	fi
 
-manual-pdf: manual-html
-	ln -fs manual.docbook manual.xml # unfortunately db2pdf wants this...
+capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1: manual.docbook
+	xsltproc --stringparam profile.condition man -o manual-profiled.docbook \
+	  /usr/share/xml/docbook/stylesheet/nwalsh/current/profiling/profile.xsl \
+	  manual.docbook
+	xsltproc /usr/share/xml/docbook/stylesheet/nwalsh/current/manpages/docbook.xsl \
+	  manual-profiled.docbook
+	rm manual-profiled.docbook
+
+manual-pdf: manual.docbook
+	xsltproc --stringparam profile.condition pdf -o manual.xml \
+	  /usr/share/xml/docbook/stylesheet/nwalsh/current/profiling/profile.xsl \
+	  manual.docbook
 	db2pdf manual.xml 
-	-rm CATALOG.local manual.aux manual.log manual.out manual.tex suse-*.dsl
+	-rm CATALOG.local manual.aux manual.log manual.out manual.tex suse-*.dsl manual.xml
 
 reference-html: Doxyfile.in
 	sed -e 's,@version\@,$(VERSION),g' \
@@ -356,10 +529,10 @@ install-data-local:
 	fi
 
 uninstall-local:
-	rm -rf $(DESTDIR)$(docdir) 
+	-rm -rf $(DESTDIR)$(docdir) 
 
 maintainer-clean-local:
-	rm -rf reference manual manual.pdf
+	-rm -rf reference manual manual.pdf *.[1-9]
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

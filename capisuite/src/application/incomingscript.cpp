@@ -14,6 +14,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <Python.h>
 #include "incomingscript.h"
 #include "../modules/disconnectmodule.h"
 #include "capisuitemodule.h"

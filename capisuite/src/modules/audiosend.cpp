@@ -25,7 +25,7 @@ AudioSend::AudioSend(Connection *conn, string file, bool DTMF_exit) throw (CapiE
 }
 
 void
-AudioSend::mainLoop() throw (CapiWrongState, CapiExternalError, CapiMsgError)
+AudioSend::mainLoop() throw (CapiError,CapiWrongState,CapiExternalError,CapiMsgError)
 {
 	start_time=getTime();
 	if (!(DTMF_exit && (!conn->getDTMF().empty()) ) ) {

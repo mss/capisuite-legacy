@@ -14,12 +14,13 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <Python.h>
+#include <cStringIO.h>
+
 #ifdef HAVE_CONFIG_H
 #include "../../config.h"
 #endif
 
-#include <Python.h>
-#include <cStringIO.h>
 #include <sstream>
 #include <signal.h>
 #include <getopt.h>

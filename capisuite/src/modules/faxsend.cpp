@@ -27,7 +27,7 @@ FaxSend::FaxSend(Connection *conn, string file) throw (CapiExternalError)
 
 
 void
-FaxSend::mainLoop() throw (CapiWrongState, CapiExternalError, CapiMsgError)
+FaxSend::mainLoop() throw (CapiError,CapiWrongState,CapiExternalError,CapiMsgError)
 {
 	conn->start_file_transmission(file);
 	CallModule::mainLoop();

@@ -27,12 +27,85 @@
 	  CapiSuite from crashing when a too high DDIBaseLength was configured,
 	  thx to Michael Ressel for reporting and analyzing
 
+2004-05-18  Gernot Hillier  <gernot@hillier.de>
+	* docs/Makefile.am: remove PDF generation as it doesn't work currently;
+	  adapt Makefiles to only create man pages for "make dist"; break long
+	  lines; ignore return values of rm commands
+	* docs/manual.docbook: renamed to manual.docbook.in; this was necessary
+	  to avoid using phony targets in man page creation
+	* docs/manual.docbook.in: see above.
+
+2004-04-18  Gernot Hillier  <gernot@hillier.de>
+	* scripts/capisuitefax.in: allow * and # in destination numbers
+
+2004-03-24  Gernot Hillier  <gernot@hillier.de>
+	* docs/Makefile.am: create "make install" routines for manpages
+	* capisuite.spec: set mandir in configure call
+
+2004-03-23  Gernot Hillier  <gernot@hillier.de>
+	* docs/manual-de.docbook (capicodes_protocol): fix small typo
+
 2004-03-20  Gernot Hillier  <gernot@hillier.de>
 	* src/application/pythonscript.h: extend prefix() so that it can create
 	  a short prefix, too; use short prefix for Python traceback (fixes bug
 	  #63, reported anonymously)
 	* src/application/pythonscript.cpp: Likewise.
 
+2004-03-09  Hartmut Goebel  <h.goebel@crazy-compilers.com>
+	* src/application/idlescript.cpp: Reduced delay until idlescript.py is 
+	  called the first time after startup.
+
+2004-03-07  Gernot Hillier  <gernot@hillier.de>
+	* docs/manual.docbook: update links to new web site structure
+	* docs/manual-de.docbook: Likewise.
+	* docs/Makefile.am: tell DocBook HTML stylesheets to generate UTF-8
+	  and a valid DOCTYPE
+
+2004-02-25  Gernot Hillier  <gernot@hillier.de>
+	* docs/Makefile.am: add support for manpage creation, move validation
+	  etc. to separate target
+	* docs/manual.README: update, add information about manpages
+	* docs/manual.docbook: restructure to also create five man pages:
+	  (capisuite.8, capisuite.conf.5, fax.conf.5, answering_machine.conf.5,
+	  capisuitefax.1)
+
+2004-02-20  Gernot Hillier  <gernot@hillier.de>
+	* src/application/capisuite.cpp: changed include order to get rid of
+	  the "_POSIX_C_SOURCE redefined" warning (thx to Hartmut Goebel)
+	* src/application/capisuitemodule.cpp: Likewise.
+	* src/application/idlescript.cpp: Likewise.
+	* src/application/incomingscript.cpp: Likewise.
+	* src/application/pythonscript.h: Likewise.
+	* scripts/answering_machine.confin: remove spaces in example which
+	  confused the config file parser when not deleted by the user
+	* scripts/fax.confin: Likewise.
+
+2004-02-17  Hartmut Goebel  <h.goebel@goebel-consult.de>
+	* src/application/pythonscript.h: fixed #include statement
+	* src/backend/connection.cpp: Likewise.
+
+2004-02-11  Gernot Hillier  <gernot@hillier.de>
+	* scripts/incoming.py (CVS log): removed not allowed german umlauts
+	* src/modules/callmodule.h (mainLoop): correct exception
+	  declaration order (thx to Matthias Haberkorn for the patch)
+
 2004-02-08  Gernot Hillier  <gernot@hillier.de>
 	* src/backend/connection.cpp (data_b3_conf): fix behaviour when 
 	  DATA_B3_CONF comes immediately after DATA_B3_REQ
+	* scripts/capisuitefax.in: also accept PDF files
+
+2004-02-08  Gernot Hillier  <gernot@hillier.de>
+	* src/application/capisuitemodule.cpp (capisuite_audio_send,
+	  capisuite_fax_send): catch some missing Exceptions
+	* src/backend/connection.{cpp,h} (connectWaiting,rejectWaiting): throw
+	  CapiExternalError instead of CapiError when user passed a wrong call
+	* src/backend/connection.{cpp,h} (connectWaiting,connect_b3_active_ind,
+	  disconnect_b3_ind,disconnect_ind,data_b3_ind,facility_ind_DTMF,
+	  info_ind_alerting,info_ind_called_party_nr,select_b_protocol_conf,
+	  alert_conf,data_b3_conf,facility_conf_DTMF,disconnect_b3_conf,
+	  disconnect_conf,send_block,start_file_transmission): add CapiError to
+	  allowed throwable objects in declaration
+	* src/modules/audiosend.{cpp,h} (mainLoop): Likewise.
+	* src/modules/callmodule.{cpp,h} (mainLoop): Likewise.
+	* src/modules/faxsend.{cpp,h} (mainLoop): Likewise.
+

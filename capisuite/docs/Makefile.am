@@ -1,32 +1,57 @@
 docdir = @docdir@
-EXTRA_DIST = Doxyfile.in mainpage.doxy manual.docbook manual.README
+EXTRA_DIST = Doxyfile.in mainpage.doxy manual.docbook manual.README $(man_MANS)
+
+man_MANS = capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1
 
 # dist-hook may be not portable partly, so non-SuSE-users please
 # forgive me and don't call "make dist" or send me a patch ;-)
 
-dist-hook: manual-html manual-pdf reference-html
+# removed manual-pdf as it currently doesn't work, will be reactivated soon
+dist-hook: cleandoc manual-html reference-html capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1
 	mkdir $(distdir)/manual
 	cp -r $(srcdir)/manual/* $(distdir)/manual/
 	mkdir $(distdir)/reference
 	cp $(srcdir)/reference/* $(distdir)/reference/
 	cp manual.pdf $(distdir)/
 
-manual-html:
+# force recreation of complete manual for dist
+cleandoc:
+	-rm manual.docbook
+
+manual.docbook: manual.docbook.in
 	sed -e 's,<title>CapiSuite [0-9a-z\.]*</title>,<title>CapiSuite $(VERSION)</title>,g' \
-	  manual.docbook > manual.new # (not another *.in file...)
-	mv manual.new manual.docbook
+	  manual.docbook.in > manual.docbook
 	xmllint --noout --valid manual.docbook
-	xsltproc -o manual/ /usr/share/sgml/docbook/docbook-xsl-stylesheets/xhtml/chunk.xsl manual.docbook # create HTML
-	cp -r /usr/share/sgml/docbook/docbook-xsl-stylesheets/images/ manual/ # missing images...
+
+manual-html: manual.docbook
+	xsltproc --stringparam profile.condition html -o manual-profiled.docbook \
+	  /usr/share/xml/docbook/stylesheet/nwalsh/current/profiling/profile.xsl \
+	  manual.docbook
+	xsltproc --stringparam chunker.output.encoding UTF-8 \
+	  --stringparam chunker.output.doctype-public "-//W3C//DTD XHTML 1.0 Transitional//EN" \
+	  --stringparam chunker.output.doctype-system "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" \
+	  -o manual/ /usr/share/xml/docbook/stylesheet/nwalsh/current/xhtml/chunk.xsl manual-profiled.docbook
+	rm manual-profiled.docbook
+	cp -r /usr/share/xml/docbook/stylesheet/nwalsh/current/images/ manual/ # missing images...
 	if test ! -d manual/images/callouts; then \
-		echo "manual pages weren't created succesful." ;\
+		echo "manual wasn't created succesful." ;\
 		exit 1; \
 	fi
 
-manual-pdf: manual-html
-	ln -fs manual.docbook manual.xml # unfortunately db2pdf wants this...
+capisuite.8 capisuite.conf.5 fax.conf.5 answering_machine.conf.5 capisuitefax.1: manual.docbook
+	xsltproc --stringparam profile.condition man -o manual-profiled.docbook \
+	  /usr/share/xml/docbook/stylesheet/nwalsh/current/profiling/profile.xsl \
+	  manual.docbook
+	xsltproc /usr/share/xml/docbook/stylesheet/nwalsh/current/manpages/docbook.xsl \
+	  manual-profiled.docbook
+	rm manual-profiled.docbook
+
+manual-pdf: manual.docbook
+	xsltproc --stringparam profile.condition pdf -o manual.xml \
+	  /usr/share/xml/docbook/stylesheet/nwalsh/current/profiling/profile.xsl \
+	  manual.docbook
 	db2pdf manual.xml 
-	-rm CATALOG.local manual.aux manual.log manual.out manual.tex suse-*.dsl
+	-rm CATALOG.local manual.aux manual.log manual.out manual.tex suse-*.dsl manual.xml
 
 reference-html: Doxyfile.in
 	sed -e 's,@version\@,$(VERSION),g' \
@@ -55,8 +80,8 @@ install-data-local:
 	fi
 
 uninstall-local:
-	rm -rf $(DESTDIR)$(docdir) 
+	-rm -rf $(DESTDIR)$(docdir) 
 
 maintainer-clean-local:
-	rm -rf reference manual manual.pdf
- 
+	-rm -rf reference manual manual.pdf *.[1-9]
+

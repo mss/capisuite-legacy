@@ -411,7 +411,7 @@ def newAnnouncement(call,userdir,curr_user,config):
 #   Andreas Scholz for reporting!
 #
 # Revision 1.9  2003/06/27 07:51:09  gernot
-# - replaced german umlaut in filename "nachricht-gelöscht.la", can cause
+# - replaced german umlaut in filename "nachricht-gelscht.la", can cause
 #   problems on Redhat, thx to Herbert Hübner for reporting
 #
 # Revision 1.8  2003/06/16 10:21:05  gernot
