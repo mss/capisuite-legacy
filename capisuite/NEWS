@@ -1,15 +1,33 @@
 0.4.4 (CVS nn):
 ===============
 
-	* scripts: fix a bug in faxIncoming which lead to a non-working
-          fax reception after automatic switch from voice to fax mode
-          (thx to Andreas Scholz and Harald Jansen)
-
-	* core: switch_to_faxG3 now also returns a faxInfo structure
+	* Makefiles: fixed "make" to not trying to create directories any more -
+	  this prevented normal users to call "make" sometimes (thx to Steffen
+	  Barszus for the detailled report)
 
 	* scripts: added new non-error ISDN cause (0x349f) to fax send routine.
-          It was understood as error by CapiSuite but means "normal call 
-          clearing, unspecified"
+	  It was wrongly understood as an error before and therefore leading to
+	  repeated fax sends (thx to Stefan Brandner for reporting)
+
+	* scripts: fixed a bug which lead to a connection abort when the
+	  answering machine recognized an incoming fax call (thx to Andreas
+	  Scholz and Harald Jansen)
+
+	* scripts: fixed a bug which under some circumstances caused an error
+	  message when fax_numbers was not set for a user
+
+	* scripts: received voice calls are now converted to 16 bit WAV files
+	  instead of 8 bit; this leads to a dramatically better playback quality
+	  for the sound files attached to the sent mails (thx to Holger Krull
+	  for the fix; closes bug #51)
+
+	* core: support for ISDN lines with DDI (means you only have one base
+	  number - not a list of MSNs - and can define extensions how you like;
+	  in Germany used in the "Anlagenanschluss"). We now have three new
+	  DDI_* options in capisuite.conf. Many thanks goes to Jörg Fester and
+	  the x-dot GmbH for paying and supporting me to develop this feature.
+	  They use CapiSuite in their product (see http://www.x-manage.de).
+
 
 0.4.3 (CVS tag CAPISUITE_043):
 ==============================
