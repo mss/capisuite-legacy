@@ -360,8 +360,52 @@ make install</screen>
 
 				<para>Jetzt können Sie ganz normal mit der Installation weiter machen wie im
 				<xref linkend="install_source"/> beschrieben.</para>
-
-
+			</sect3>
+			
+		</sect2>
+		<sect2 id="install_update"><title>Update von früheren Versionen</title>
+			<para>Dieser Abschnitt enthält einen Überblick über das Vorgehen,
+			wenn Sie bereits eine frühere Version von CapiSuite installiert 
+			haben.</para>
+			
+			<para>Generell sollte der übliche Updatemechanismus, passend zu Ihrer
+			Installationsart verwendet werden - zum Beispiel also der Update-Modus
+			Ihres Paketmanagementtools wenn Sie ein Binärpaket installiert haben.
+			Sollten Sie CapiSuite von den Sourcen gebaut haben, sollten Sie ihre 
+			alte Konfiguration vor dem Aufruf von <command>make install</command>
+			sichern. Im Prinzip entspricht das Vorgehen hier dem bei jedem anderen
+			Software-Paket, das Sie benutzen - daher möchten wir hier nicht weiter
+			darauf eingehen.</para>
+			
+			<para>Was hier hauptsächlich behandelt werden soll, sind die Änderungen
+			der Konfigurationsdateien und der Anforderungen an andere installierte Tools
+			zwischen verschiedenen CapiSuite-Versionen, so dass Sie Ihre Installation
+			schnell auf den aktuellen Stand bringen könnnen. Eine umfassendere 
+			Liste der neuen Features und wichtigen Änderungen finden Sie in der Datei
+			<filename>NEWS</filename>, die in den CapiSuite-Paketen enthalten ist.
+			Zusätzlich enthält das <filename>ChangeLog</filename> alle einzelnen 
+			Änderungen in den Source-Dateien im Detail, was aber wohl nur für
+			Entwickler interessant sein dürfte.</para>
+			
+			<sect3 id="install_update_0_4_5"><title>0.4.4 auf 0.4.5</title>
+				<para>Die <emphasis>Standardskripte</emphasis> verwenden
+				nun eine SMTP-Verbindung zu localhost, anstatt das 
+				<command>sendmail</command>-Kommando manuell aufzurufen, wie
+				es frühere Versionen taten. Dies wurde auf Grund von diversen
+				Stabilitätsproblemen mit dem alten Mechanismus geändert.
+				Das bedeutet, dass Sie nun einen laufenden SMTP-Dämon benötigen,
+				der Verbindungen auf localhost annimmt. Da dies in der 
+				Standardeinrichtung der meisten Distributionen der Fall ist, 
+				sollte das kein Problem sein.</para>
+				
+				<para>In <filename>answering_machine.conf</filename> und 
+				<filename>fax.conf</filename> stehen zwei neue Optionen zur
+				Verfügung: <option>fax_email_from</option> und 
+				<option>voice_email_from</option> erlauben die Festlegung
+				der von CapiSuite beim Senden von Mails an die User verwendeten 
+				Absenderadresse. Diese Einträge sind allerdings optional - 
+				sind sie nicht gesetzt, wird wie bisher der Username als
+				Absender angegeben.</para>
 			</sect3>
 		</sect2>
 	</sect1>

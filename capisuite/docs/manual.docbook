@@ -355,8 +355,46 @@ make install</screen>
 
 				<para>Now, you can continue with the normal installation process as described in
 				<xref linkend="install_source"/>.</para>
-
-
+			</sect3>
+		</sect2>
+		<sect2 id="install_update"><title>Updating from previous versions</title>
+			<para>This section will give you an overview of how to update
+			CapiSuite from earlier versions.</para>
+			
+			<para>In general, the usual update mechanism depending on your
+			installation method should be used - that means the update features
+			of your package managers if you installed from binary packages. 
+			If you installed from sources, you should save your configuration
+			files before doing <command>make install</command>. As this is
+			done like for any other software package you use, we won't go into
+			further detail about that here.</para>
+			
+			<para>What this section should mainly cover are the changes in the 
+			configuration files and requirements to other tools between different 
+			versions, so that you'll be able to update your configuration quickly. 
+			For a more complete list of new features and important changes, please 
+			refer to the file <filename>NEWS</filename> distributed with the 
+			CapiSuite packages. In addition, all single changes in the different 
+			source code files can be found in the <filename>ChangeLog</filename>, 
+			which, however, will only be interesting for developers, I suppose.</para>
+			
+			<sect3 id="install_update_0_4_5"><title>From 0.4.4 to 0.4.5</title>
+				<para>The <emphasis>default scripts</emphasis> now use
+				an SMTP connection to localhost instead of calling the 
+				<command>sendmail</command> command manually as previous
+				versions did. This was changed because the other mechanism
+				had many stability problems in the past. This means, you now
+				have to have a running SMTP daemon listening on your localhost.
+				As this is the default configuration of most distributions, 
+				this should be no problem.</para>
+				
+				<para>In <filename>answering_machine.conf</filename> and 
+				<filename>fax.conf</filename>, two new options have been added:
+				<option>fax_email_from</option> and <option>voice_email_from</option>
+				allow the configuration of the from address CapiSuite uses
+				when sending mails to the user. These new entries are optional - 
+				if you don't set them, the user name is used as from address
+				as in previous versions.</para>
 			</sect3>
 		</sect2>
 	</sect1>
