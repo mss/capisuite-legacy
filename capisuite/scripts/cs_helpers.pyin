@@ -9,6 +9,8 @@
 #  the Free Software Foundation; either version 2 of the License, or
 #  (at your option) any later version.
 
+import os
+
 # the name of the config file read by the scripts; see there for options and
 # descriptions
 configfile_fax="@pkgsysconfdir@/fax.conf"
@@ -25,7 +27,7 @@ def sfftotiff(fromfile,tofile):
 	#2 parameters=("-tif",fromfile,tofile)
 	# for sfftobmp 3.x: remove the "#3" characters of the following line
 	#3 parameters=("-tif",fromfile,"-o",tofile)	
-	return os.spawnlp(os.P_WAIT,"sfftobmp","sfftobmp",parameters)
+	return os.spawnlp(os.P_WAIT,"sfftobmp","sfftobmp",*parameters)
 
 # @brief read configuration file and return a ConfigParser object
 #
@@ -85,7 +87,7 @@ def getOption(config,user,option,default=None):
 #
 # @return the found file with full path
 def getAudio(config,user,filename):
-	import os,capisuite
+	import capisuite
 	systemdir=getOption(config,"","audio_dir")
 	if (systemdir==None):
 		raise IOError("option audio_dir not found.")
@@ -116,7 +118,7 @@ def getAudio(config,user,filename):
 #
 # @return new file name
 def uniqueName(directory,basename,suffix):
-	import fcntl,os,re
+	import fcntl,re
 	# acquire lock
 	lockfile=open(directory+"cs_lock","w")
 	fcntl.lockf(lockfile,fcntl.LOCK_EX)
@@ -163,7 +165,7 @@ def uniqueName(directory,basename,suffix):
 # @param text a string containing the text of the first part of the mail
 # @param attachment name of the file to send as attachment
 def sendMIMEMail(mail_from,mail_to,mail_subject,mail_type,text,attachment):
-	import email.MIMEBase,email.MIMEText,email.MIMEAudio,email.Encoders,encodings.ascii,os,sys,popen2,capisuite
+	import email.MIMEBase,email.MIMEText,email.MIMEAudio,email.Encoders,encodings.ascii,sys,popen2,capisuite
 	msg = email.MIMEBase.MIMEBase("multipart","mixed")
 	msg['Subject']=mail_subject
 	msg['From']=mail_from
@@ -176,7 +178,7 @@ def sendMIMEMail(mail_from,mail_to,mail_subject,mail_type,text,attachment):
 	try:
 		if (mail_type=="sff"): # normal fax file
 			# sff -> tif
-			ret=sfftotif(attachment,basename+"tif")
+			ret=sfftotiff(attachment,basename+"tif")
 			if (ret or not os.access(basename+"tif",os.F_OK)):
 				raise "conv-error","Can't convert sff to tif. sfftobmp not installed?"
 			# tif -> ps -> pdf

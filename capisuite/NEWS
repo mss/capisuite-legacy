@@ -1,15 +1,20 @@
 0.4.5 (NN):
 =========
 
-	* Started detailed ChangeLog. From now on, only important changes from
-	  the user's point of view will be mentioned in this file. All details 
-	  will go to the "ChangeLog" file.
+	* core: fixed compile problem with new capi4linux library
+
+	* core: fixed a crash which could be caused by wrong DDI parameters
+	  in capisuite.conf
 	
 	* scripts: Adapted to work with the new parameters of sfftobmp 3.x.
 	  Normally, installed version will be detected automatically when 
 	  building CapiSuite. If you change your sfftobmp version later,  
 	  you'll have to adapt the function sfftotif at the beginning of
 	  cs_helpers.py manually.
+
+	* Started detailed ChangeLog. From now on, only important changes from
+	  the user's point of view will be mentioned in this file. All details 
+	  will go to the "ChangeLog" file.
 
 0.4.4 (CVS tag CAPISUITE_044):
 ==============================
