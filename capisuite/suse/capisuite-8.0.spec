@@ -13,7 +13,7 @@
 # the spec or a link to your RPM on the homepage.
 #
 # neededforbuild i4l gpp libstdc++-devel libxml2-devel python python-devel
-# usedforbuild    aaa_base aaa_dir aaa_version base bash bindutil bison bzip cpio cpp cyrus-sasl db devs diffutils e2fsprogs file fileutils findutils flex gawk gdbm-devel glibc glibc-devel glibc-locale gpm gppshare grep groff gzip kbd less m4 make man mktemp modutils ncurses ncurses-devel net-tools netcfg pam-devel pam-modules patch ps rcs readline sendmail sh-utils shadow strace syslogd sysvinit texinfo textutils timezone unzip util-linux vim autoconf automake binutils cracklib gcc gdbm gettext gpp i4l libgpp libtool libxml2-devel libz pam perl python python-devel rpm
+# usedforbuild   aaa_dir aaa_version bash bindutil bison bzip cpio cyrus-sasl devs e2fsprogs fileutils flex gdbm-devel glibc-devel glibc-locale gpm gppshare groff gzip kbd less make man modutils ncurses-devel net-tools netcfg pam-devel pam-modules patch ps rcs sendmail shadow strace syslogd sysvinit texinfo timezone unzip vim autoconf automake binutils cracklib gcc gettext gpp i4l libgpp libtool libxml2-devel libz perl python python-devel
 
 Name:         capisuite
 License:      GPL
