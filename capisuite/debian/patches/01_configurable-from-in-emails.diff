@@ -1,0 +1,115 @@
+--- scripts/fax.confin.orig	Wed Sep  3 19:20:26 2003
++++ scripts/fax.confin	Wed Sep  3 19:06:45 2003
+@@ -108,6 +108,12 @@
+ #
+ fax_headline="Sent by CapiSuite (www.CapiSuite.de)"
+ 
++# fax_email_from (optional, default fax addressee) [Backport to 0.4.4]
++# When a received fax is distributed by e-mail this address
++# used in the 'From:' header field. Ditto from success/failed fax e-mail
++# messages.
++fax_email_from="capisuite daemon <root>"
++
+ ###############################################################################
+ ############################# user settings ###################################
+ ###############################################################################
+@@ -117,7 +123,7 @@
+ #
+ # Each user section can override the following default options given above:
+ #
+-# outgoing_MSN, outgoing_timeout, fax_stationID, fax_headline
++# outgoing_MSN, outgoing_timeout, fax_stationID, fax_headline, fax_email_from
+ #
+ # Additionally, the following options are possible:
+ #
+--- scripts/answering_machine.confin.orig	Mon Apr 28 23:15:42 2003
++++ scripts/answering_machine.confin	Wed Sep  3 18:41:54 2003
+@@ -80,6 +80,11 @@
+ # finished by the answering machine
+ record_silence_timeout="5"
+ 
++# voice_email_from (optional, default voice message addressee) [Backport to 0.4.4]
++# When voice messages are send by e-mail this address is used in the 'From:'
++# header field.
++voice_email_from="capisuite daemon <root>"
++
+ ###############################################################################
+ ############################# user settings ###################################
+ ###############################################################################
+@@ -89,7 +94,8 @@
+ #
+ # Each user section can override the following default options given above:
+ #
+-# voice_delay, announcement, record_length, record_silence_timeout
++# voice_delay, announcement, record_length, record_silence_timeout,
++# voice_email_from
+ #
+ # Additionally, the following options are possible:
+ #
+--- scripts/idle.py.orig	Wed Sep  3 18:08:37 2003
++++ scripts/idle.py	Wed Sep  3 19:07:27 2003
+@@ -92,6 +92,9 @@
+ 			mailaddress=cs_helpers.getOption(config,user,"fax_email","")
+ 			if (mailaddress==""):
+ 				mailaddress=user
++			fromaddress=cs_helpers.getOption(config,user,"fax_email_from","")
++			if (fromaddress==""):
++				fromaddress=user
+ 
+ 			capisuite.log("job "+job_fax+" from "+user+" to "+dialstring+" initiated",1)
+ 			result,resultB3 = sendfax(capi,sendq+job_fax,outgoing_nr,dialstring,user,config)
+@@ -106,7 +109,7 @@
+ 				  +"\nNeeded tries: "+str(tries) \
+ 				  +("\nLast result: 0x%x/0x%x" % (result,resultB3)) \
+ 				  +"\n\nIt was moved to file://"+done+user+"-"+job_fax
+-				cs_helpers.sendSimpleMail(user,mailaddress,
++				cs_helpers.sendSimpleMail(fromaddress,mailaddress,
+ 				  "Fax to "+addressee+" ("+dialstring+") sent successfully.",
+ 				  mailtext)
+ 			else:
+@@ -130,7 +133,7 @@
+ 					  +"\nFilename: "+job_fax+"\nTries: "+str(tries) \
+ 					  +"\nLast result: 0x%x/0x%x" % (result,resultB3) \
+ 					  +"\n\nIt was moved to file://"+failed+user+"-"+job_fax
+-					cs_helpers.sendSimpleMail(user,mailaddress,
++					cs_helpers.sendSimpleMail(fromaddress,mailaddress,
+ 					  "Fax to "+addressee+" ("+dialstring+") FAILED.",
+ 					  mailtext)
+ 
+--- scripts/incoming.py.orig	Wed Sep  3 18:08:37 2003
++++ scripts/incoming.py	Wed Sep  3 18:52:13 2003
+@@ -141,6 +141,9 @@
+ 		os.chmod(filename[:-3]+"txt",0600)
+ 		os.chown(filename[:-3]+"txt",userdata[2],userdata[3])
+ 
++		fromaddress=cs_helpers.getOption(config,curr_user,"fax_email_from","")
++		if (fromaddress==""):
++			fromaddress=curr_user
+ 		mailaddress=cs_helpers.getOption(config,curr_user,"fax_email","")
+ 		if (mailaddress==""):
+ 			mailaddress=curr_user
+@@ -149,7 +152,7 @@
+ 			capisuite.error("Warning: No valid fax_action definition found for user "+curr_user+" -> assuming SaveOnly")
+ 			action="saveonly"
+ 		if (action=="mailandsave"):
+-			cs_helpers.sendMIMEMail(curr_user, mailaddress, "Fax received from "+call_from+" to "+call_to, faxFormat,
++			cs_helpers.sendMIMEMail(fromaddress, mailaddress, "Fax received from "+call_from+" to "+call_to, faxFormat,
+ 			  "You got a fax from "+call_from+" to "+call_to+"\nDate: "+time.ctime()+"\n\n"
+ 			  +"See attached file.\nThe original file was saved to file://"+filename+"\n\n", filename)
+ 
+@@ -239,11 +242,14 @@
+ 		os.chmod(filename[:-2]+"txt",0600)
+ 		os.chown(filename[:-2]+"txt",userdata[2],userdata[3])
+ 
++		fromaddress=cs_helpers.getOption(config,curr_user,"voice_email_from","")
++		if (fromaddress==""):
++			fromaddress=curr_user
+ 		mailaddress=cs_helpers.getOption(config,curr_user,"voice_email","")
+ 		if (mailaddress==""):
+ 			mailaddress=curr_user
+ 		if (action=="mailandsave"):
+-			cs_helpers.sendMIMEMail(curr_user, mailaddress, "Voice call received from "+call_from+" to "+call_to, "la",
++			cs_helpers.sendMIMEMail(fromaddress, mailaddress, "Voice call received from "+call_from+" to "+call_to, "la",
+ 			  "You got a voice call from "+call_from+" to "+call_to+"\nDate: "+time.ctime()+"\n\n"
+ 			  +"See attached file.\nThe original file was saved to file://"+filename+"\n\n", filename)
+ 

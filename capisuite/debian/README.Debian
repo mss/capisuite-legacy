@@ -23,17 +23,17 @@ is inserted/removed:
   o install pcmcia-cs pkg that contains the cardmgr daemon
   o remove boot/shutdown scripts
 
-	update-rc.d -f capisuite remove
+	rm /etc/rc*.d/S*capisuite
 
   o insert the card into the PCMCIA slot
-  o check new the cardmgr entries at the end of
+  o now check the cardmgr entries at the end of
 
   	/var/log/daemon.log
 
-    to find out what script in /etc/pcmcia cardmgr call on insertion
+    to find out what script in /etc/pcmcia cardmgr calls
 
-  o add /etc/init.d/capisuite start|stop to end|start of the the
+  o add /etc/init.d/capisuite start|stop to end|start of the
     start)|stop) branches in the /etc/pcmcia/ script
 
 
- -- Achim Bohnet <ach@mpe.mpg.de>, Mon, 19 Mar 2003 19:28:23 +0100
+ -- Achim Bohnet <ach@mpe.mpg.de>, Mon, 14 Jan 2004 21:17:03 +0100
