@@ -62,8 +62,7 @@ class CallModule: public CallInterface
 		    This method will likely be overwritten in each sub class. You can call CallModule::mainLoop() there to implement busy loops.
 		    @throw CapiWrongState Something is tried in a wrong connection state. This usually means our call was finished (raised directly).
 		    @throw CapiMsgError A CAPI function hasn't succeeded for some reason (not thrown by CallModule, but may be thrown in subclasses).
-		    @throw CapiError Some internal error has occured (not thrown by CallModule, but may
-be thrown in subclasses).
+		    @throw CapiError Some internal error has occured (not thrown by CallModule, but may be thrown in subclasses).
 		    @throw CapiExternalError A given command didn't succeed for a reason not caused by the CAPI (not thrown by CallModule, but may be thrown in subclasses)
   		*/
 		virtual void mainLoop() throw (CapiWrongState,CapiMsgError,CapiExternalError,CapiError);
