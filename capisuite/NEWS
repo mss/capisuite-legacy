@@ -1,7 +1,9 @@
-0.4.5 (NN):
-=========
+0.4.5:
+======
 
 	* scripts: prevent cropping of fax pages by auto-scaling
+
+	* core: use shorter, more readable format for Python traceback logging
 
 	* scripts: use a SMTP connection to localhost instead of calling the
 	  sendmail binary for sending mails. Many reports showed that calling
@@ -25,8 +27,8 @@
 	  the user's point of view will be mentioned in this file. All details 
 	  will go to the "ChangeLog" file.
 
-0.4.4 (CVS tag CAPISUITE_044):
-==============================
+0.4.4:
+======
 
 	* Makefiles: fixed "make" to not trying to create directories any more -
 	  this prevented normal users to call "make" sometimes (thx to Steffen
@@ -55,8 +57,8 @@
 	  the x-dot GmbH for paying and supporting me to develop this feature.
 	  They use CapiSuite in their product (see http://www.x-manage.de).
 
-0.4.3 (CVS tag CAPISUITE_043):
-==============================
+0.4.3:
+======
 
 	* scripts & core: support color fax reception (bug #22, thx to
 	  Axel Schneck)
@@ -87,8 +89,8 @@
 	  hit Redhat users for any reason beyond my understanding and prevented
 	  CapiSuite from sending mails sometimes/always...
 
-0.4.2 (CVS tag CAPISUITE_042):
-==============================
+0.4.2:
+======
 	* manual now available as PDF  
 
 	* scripts: fixed an overflow in cs_helpery.py which caused hangs for
@@ -117,8 +119,8 @@
 
 	* core: small bug which lead to a wrong outgoing MSN in rare cases fixed
 
-0.4.1a (tag CAPISUITE_041a):
-============================
+0.4.1a:
+=======
 	* fixed a bug in the rc-script of CapiSuite which made 
           "capisuite start" unfunctional in 0.4.1 (path of executable changed)
 
@@ -133,8 +135,8 @@
 	* fixed SECURITY bug in cronjob which allowed every CapiSuite user
           to become root. Sorry... :-((
 
-0.4.1 (tag CAPISUITE_041):
-==========================
+0.4.1:
+======
 	* cron script: redirect error output to /dev/null
 
         * core: cosmetical code improvements to make old gcc-2.95 more happy
@@ -152,8 +154,8 @@
 
 Thanks goes mainly to Achim Bohnet and Dieter Pelzel for reporting bugs 
 
-0.4 (first public release, tag CAPISUITE_04):
-=============================================
+0.4 (first public release):
+===========================
 	* added cron script for cleaning up spool dirs
 	* fixed bug in rc.capisuite (was also started when not configured)
 	* scripts: remote inquiry supports new and old messages now

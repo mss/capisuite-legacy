@@ -15,8 +15,6 @@
 	  and ps2pdf which prevent cropping of fax pages. Thanks to all the
 	  people who contributed suggestions and patches to bug #55.
 	* scripts/capisuitefax.in: Likewise.
-	* src/backend/connection.cpp (data_b3_conf): fix behaviour when 
-	  DATA_B3_CONF comes immediately after DATA_B3_REQ
 
 2004-07-15  Gernot Hillier  <gernot@hillier.de>
 	* configure.in: support new parameter in ALERT_REQ of newer capi4linux
@@ -29,5 +27,12 @@
 	  CapiSuite from crashing when a too high DDIBaseLength was configured,
 	  thx to Michael Ressel for reporting and analyzing
 
-2004-06-10  Gernot Hillier  <gernot@hillier.de>
-	* started ChangeLog
+2004-03-20  Gernot Hillier  <gernot@hillier.de>
+	* src/application/pythonscript.h: extend prefix() so that it can create
+	  a short prefix, too; use short prefix for Python traceback (fixes bug
+	  #63, reported anonymously)
+	* src/application/pythonscript.cpp: Likewise.
+
+2004-02-08  Gernot Hillier  <gernot@hillier.de>
+	* src/backend/connection.cpp (data_b3_conf): fix behaviour when 
+	  DATA_B3_CONF comes immediately after DATA_B3_REQ
