@@ -1,3 +1,9 @@
+capisuite (0.4.3-2) unstable; urgency=low
+
+  * ARGL! really add fixes from branch_0_4. Fax receive working again
+
+ -- Achim Bohnet <ach@mpe.mpg.de>  Wed,  3 Sep 2003 18:05:30 +0200
+
 capisuite (0.4.3-1) unstable; urgency=low
 
   * new upstream release.
