@@ -7,6 +7,9 @@
 	  sendmail binary for sending mails. Many reports showed that calling
 	  sendmail manually doesn't work well on quite some systems
 
+	* core: behave correctly when DATA_B3_CONF messages come early (thx to
+	  Karsten Keil for analyzing and a nice fix!)
+
 	* core: fixed compile problem with new capi4linux library
 
 	* core: fixed a crash which could be caused by wrong DDI parameters
