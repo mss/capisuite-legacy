@@ -9,9 +9,9 @@
 #
 
 # norootforbuild
-# neededforbuild  capi4linux gcc-c++ libstdc++-devel libxml2-devel python python-devel
+# neededforbuild  capi4linux gcc-c++ libstdc++-devel libxml2-devel python python-devel sfftobmp
 
-BuildRequires: aaa_base acl attr bash bind-utils bison bzip2 coreutils cpio cpp cracklib cvs cyrus-sasl db devs diffutils e2fsprogs file filesystem fillup findutils flex gawk gdbm-devel glibc glibc-devel glibc-locale gpm grep groff gzip info insserv kbd less libacl libattr libgcc libselinux libstdc++ libxcrypt m4 make man mktemp module-init-tools ncurses ncurses-devel net-tools netcfg openldap2-client openssl pam pam-modules patch permissions popt procinfo procps psmisc pwdutils rcs readline sed strace syslogd sysvinit tar tcpd texinfo timezone unzip util-linux vim zlib zlib-devel binutils capi4linux gcc gcc-c++ gdbm gettext libstdc++-devel libtool libxml2-devel perl python python-devel rpm
+BuildRequires: aaa_base acl attr bash bind-utils bison bzip2 coreutils cpio cpp cracklib cvs cyrus-sasl db devs diffutils e2fsprogs file filesystem fillup findutils flex gawk gdbm-devel glibc glibc-devel glibc-locale gpm grep groff gzip info insserv kbd less libacl libattr libgcc libselinux libstdc++ libxcrypt m4 make man mktemp module-init-tools ncurses ncurses-devel net-tools netcfg openldap2-client openssl pam pam-modules patch permissions popt procinfo procps psmisc pwdutils rcs readline sed strace syslogd sysvinit tar tcpd texinfo timezone unzip util-linux vim zlib zlib-devel binutils capi4linux gcc gcc-c++ gdbm gettext libstdc++-devel libtool libxml2-devel perl python python-devel rpm sfftobmp libjpeg libtiff
 
 Name:         capisuite
 License:      GPL
@@ -22,7 +22,7 @@ Release:      0
 %define pyver %(python -c 'import sys; print sys.version[:3]')
 Requires:     sfftobmp sox tiff ghostscript-library python >= %pyver, python < %{pyver}.99
 Summary:      ISDN telecommunication suite providing fax and voice services
-Source0:      capisuite-%{version}.tar.bz2
+Source0:      capisuite-%{version}.tar.gz
 URL:          http://www.capisuite.de
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 PreReq:       %insserv_prereq
@@ -89,6 +89,11 @@ rm -rf $RPM_BUILD_ROOT
 /etc/init.d/capisuite
 /etc/cron.daily/capisuite
 /usr/sbin/rccapisuite
+%{_mandir}/man1/capisuitefax.1.gz
+%{_mandir}/man5/answering_machine.conf.5.gz
+%{_mandir}/man5/capisuite.conf.5.gz
+%{_mandir}/man5/fax.conf.5.gz
+%{_mandir}/man8/capisuite.8.gz
 
 %changelog -n capisuite
 * Sun Nov 28 2004 - gernot@hillier.de

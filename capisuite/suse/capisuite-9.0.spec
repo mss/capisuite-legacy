@@ -12,8 +12,8 @@
 # If you created your own RPM, please tell me and I'll happily include
 # the spec or a link to your RPM on the homepage.
 #
-# neededforbuild  capi4linux gcc-c++ libstdc++-devel libxml2-devel python python-devel
-# usedforbuild   acl bash bison cpio cvs cyrus-sasl devs e2fsprogs filesystem findutils flex gdbm-devel glibc-devel glibc-locale gpm groff gzip info kbd less libattr libstdc++ m4 make man modutils ncurses ncurses-devel net-tools netcfg pam pam-devel pam-modules patch ps rcs sed sendmail strace syslogd sysvinit texinfo unzip vim zlib-devel binutils capi4linux cracklib gcc gcc-c++ gdbm gettext libstdc++-devel libtool libxml2-devel perl python python-devel
+# neededforbuild  capi4linux gcc-c++ libstdc++-devel libxml2-devel python python-devel sfftobmp
+# usedforbuild   acl bash bison cpio cvs cyrus-sasl devs e2fsprogs filesystem findutils flex gdbm-devel glibc-devel glibc-locale gpm groff gzip info kbd less libattr libstdc++ m4 make man modutils ncurses ncurses-devel net-tools netcfg pam pam-devel pam-modules patch ps rcs sed sendmail strace syslogd sysvinit texinfo unzip vim zlib-devel binutils capi4linux cracklib gcc gcc-c++ gdbm gettext libstdc++-devel libtool libxml2-devel perl python python-devel sfftobmp libjpeg libtiff
 Name:         capisuite
 License:      GPL
 Group:        Hardware/ISDN
@@ -83,6 +83,11 @@ rm -rf $RPM_BUILD_ROOT
 /etc/init.d/capisuite
 /etc/cron.daily/capisuite
 /usr/sbin/rccapisuite
+%{_mandir}/man1/capisuitefax.1.gz
+%{_mandir}/man5/answering_machine.conf.5.gz
+%{_mandir}/man5/capisuite.conf.5.gz
+%{_mandir}/man5/fax.conf.5.gz
+%{_mandir}/man8/capisuite.8.gz
 
 %changelog -n capisuite
 * Sun Nov 28 2004 - gernot@hillier.de
