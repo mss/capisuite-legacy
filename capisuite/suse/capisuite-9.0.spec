@@ -13,12 +13,12 @@
 # the spec or a link to your RPM on the homepage.
 #
 # neededforbuild  capi4linux gcc-c++ libstdc++-devel libxml2-devel python python-devel
-# usedforbuild   acl bash bison cpio cvs cyrus-sasl devs e2fsprogs filesystem findutils flex gdbm-devel glibc-devel glibc-locale gpm groff gzip info kbd less libattr libstdc++ m4 make man modutils ncurses ncurses-devel net-tools netcfg pam pam-devel pam-modules patch ps rcs sed sendmail strace syslogd sysvinit texinfo unzip vim zlib-devel autoconf automake binutils capi4linux cracklib gcc gcc-c++ gdbm gettext libstdc++-devel libtool libxml2-devel perl python python-devel
+# usedforbuild   acl bash bison cpio cvs cyrus-sasl devs e2fsprogs filesystem findutils flex gdbm-devel glibc-devel glibc-locale gpm groff gzip info kbd less libattr libstdc++ m4 make man modutils ncurses ncurses-devel net-tools netcfg pam pam-devel pam-modules patch ps rcs sed sendmail strace syslogd sysvinit texinfo unzip vim zlib-devel binutils capi4linux cracklib gcc gcc-c++ gdbm gettext libstdc++-devel libtool libxml2-devel perl python python-devel
 Name:         capisuite
 License:      GPL
 Group:        Hardware/ISDN
 Autoreqprov:  on
-Version:      0.4.4  
+Version:      0.4.5  
 Release:      0 
 Requires:     sfftobmp sox tiff ghostscript-library
 Summary:      ISDN telecommunication suite providing fax and voice services
@@ -85,6 +85,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/sbin/rccapisuite
 
 %changelog -n capisuite
+* Sun Nov 28 2004 - gernot@hillier.de
+- updated to 0.4.5
 * Wed Mar 24 2004 - gernot@hillier.de
 - add correct --mandir
 * Sun Jan 18 2004 - gernot@hillier.de
