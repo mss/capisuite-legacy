@@ -2,7 +2,7 @@
     @brief Contains Capi - Main Class for communication with CAPI
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.5.2.1 $
+    $Revision: 1.5.2.2 $
 */
 
 /***************************************************************************
@@ -652,6 +652,16 @@ Capi::readMessage (void) throw (CapiMsgError, CapiError, CapiWrongState, CapiExt
 										connections[plci]->info_ind_alerting(nachricht);
 								} break;
 
+								case 0x70: { // Called Party Number
+									_cdword plci=INFO_IND_PLCI(&nachricht);
+									if (debug_level >= 2)
+										debug << prefix() << "<INFO_IND: PLCI 0x" << hex << plci << ", InfoNumber CalledPartyNr " << endl;
+									if (connections.count(plci)==0)
+										throw(CapiError("PLCI unknown in INFO_IND","Capi::readMessage()"));
+									else
+										connections[plci]->info_ind_called_party_nr(nachricht);
+								} break;
+
 								default:
 									if (debug_level >= 2)
 										debug << prefix() << "<INFO_IND: Controller/PLCI 0x" << hex << INFO_IND_PLCI(&nachricht) << ", InfoNumber " << INFO_IND_INFONUMBER(&nachricht) << " (ignoring)" << endl;
@@ -956,6 +966,9 @@ Capi::getInfo(bool verbose)
 /* History
 
 $Log: capi.cpp,v $
+Revision 1.5.2.2  2003/11/01 22:59:33  gernot
+- read CalledPartyNr InfoElements
+
 Revision 1.5.2.1  2003/10/26 16:51:55  gernot
 - begin implementation of DDI, get DDI Info Elements
 

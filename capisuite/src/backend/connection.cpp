@@ -2,7 +2,7 @@
     @brief Contains Connection - Encapsulates a CAPI connection with all its states and methods.
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.11.2.2 $
+    $Revision: 1.11.2.3 $
 */
 
 /***************************************************************************
@@ -586,6 +586,23 @@ Connection::info_ind_alerting(_cmsg &message) throw (CapiWrongState)
 		call_if->alerting();
 }
 
+void
+Connection::info_ind_called_party_nr(_cmsg &message) throw (CapiWrongState)
+{
+	if (plci_state!=P2)
+		throw CapiWrongState("INFO_IND for CalledPartyNr received in wrong state","Connection::info_ind_called_party_nr()");
+
+	if (plci!=INFO_IND_PLCI(&message))
+		throw CapiError("INFO_IND received with wrong PLCI","Connection::info_ind_called_party_nr()");
+	try {
+		capi->info_resp(message.Messagenumber,plci);
+	}
+	catch (CapiMsgError e) {
+		error << prefix() << "WARNING: Can't send info_resp. Message was: " << e << endl;
+	}
+
+	debug << "found " << getNumber(INFO_IND_INFOELEMENT(&message),false) << endl;	
+}
 
 void
 Connection::connect_conf(_cmsg& message) throw (CapiWrongState, CapiMsgError)
@@ -1083,6 +1100,9 @@ Connection::convertToCP437(string &text)
 /*  History
 
 $Log: connection.cpp,v $
+Revision 1.11.2.3  2003/11/01 22:59:33  gernot
+- read CalledPartyNr InfoElements
+
 Revision 1.11.2.2  2003/10/26 16:52:55  gernot
 - begin implementation of DDI; get DDI info elements
 

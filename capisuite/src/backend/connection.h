@@ -2,7 +2,7 @@
     @brief Contains Connection - Encapsulates a CAPI connection with all its states and methods.
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.6.2.1 $
+    $Revision: 1.6.2.2 $
 */
 
 /***************************************************************************
@@ -428,6 +428,17 @@ class Connection
 		*/
 		void info_ind_alerting(_cmsg& message) throw (CapiWrongState);
 
+		/** @brief called when we get INFO_IND from CAPI with Info number saying it's ALERTING
+
+		    This method will understand additional Called Party Number Info Elements to get the DDI
+		    (necessary for getting the whole number in PtP configuration as the DDI is signalled
+		    *after* CONNECT_IND.
+
+		    @param message the received INFO_IND message
+		    @throw CapiWrongState Thrown when the message is received unexpected (i.e. in a wrong plci_state)
+		*/
+		void info_ind_called_party_nr(_cmsg& message) throw (CapiWrongState);
+
 		/** @brief called when we get DISCONNECT_B3_IND from CAPI
 
 		    This method will also send a response to Capi and stop_file_transmission and stop_file_reception().
@@ -670,6 +681,9 @@ class Connection
 /*  History
 
 $Log: connection.h,v $
+Revision 1.6.2.2  2003/11/01 22:59:33  gernot
+- read CalledPartyNr InfoElements
+
 Revision 1.6.2.1  2003/10/26 16:51:55  gernot
 - begin implementation of DDI, get DDI Info Elements
 
