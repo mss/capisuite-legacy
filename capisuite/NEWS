@@ -1,6 +1,10 @@
 0.4.5 (NN):
 =========
 
+	* scripts: use a SMTP connection to localhost instead of calling the
+	  sendmail binary for sending mails. Many reports showed that calling
+	  sendmail manually doesn't work well on quite some systems
+
 	* core: fixed compile problem with new capi4linux library
 
 	* core: fixed a crash which could be caused by wrong DDI parameters

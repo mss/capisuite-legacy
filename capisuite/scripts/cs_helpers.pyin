@@ -165,7 +165,7 @@ def uniqueName(directory,basename,suffix):
 # @param text a string containing the text of the first part of the mail
 # @param attachment name of the file to send as attachment
 def sendMIMEMail(mail_from,mail_to,mail_subject,mail_type,text,attachment):
-	import email.MIMEBase,email.MIMEText,email.MIMEAudio,email.Encoders,encodings.ascii,sys,popen2,capisuite
+	import email.MIMEBase,email.MIMEText,email.MIMEAudio,email.Encoders,encodings.ascii,smtplib,popen2,capisuite
 	msg = email.MIMEBase.MIMEBase("multipart","mixed")
 	msg['Subject']=mail_subject
 	msg['From']=mail_from
@@ -241,18 +241,14 @@ def sendMIMEMail(mail_from,mail_to,mail_subject,mail_type,text,attachment):
 		textpart = email.MIMEText.MIMEText(text)
 		msg.attach(textpart)
 
-	sendmail = popen2.Popen3("sendmail -t -f "+escape(mail_from))
-	if (sendmail.poll()!=-1):
-		capisuite.error("Error while calling sendmail. Not installed?\n")
-		return
-	sendmail.tochild.write(msg.as_string())
-	sendmail.tochild.close()
-	sendmail.fromchild.close()
-	ret=sendmail.wait()
-	if (ret!=0):
-		capisuite.error("Error while calling sendmail, return code="+str(ret))
-	else:
-		capisuite.log("sendmail finished successful",3)
+        try:
+                server = smtplib.SMTP('localhost')
+                server.sendmail(mail_from,mail_to,msg.as_string())
+                server.quit()
+        except Exception,e:
+                capisuite.error("Error while trying to send mail: %s" % e)
+        else:
+                capisuite.log("mail sent successful",3)
 
 # @brief send a simple text email
 #
@@ -263,28 +259,23 @@ def sendMIMEMail(mail_from,mail_to,mail_subject,mail_type,text,attachment):
 # @param mail_subject the subject of the mail
 # @param text a string containing the text of the first part of the mail
 def sendSimpleMail(mail_from,mail_to,mail_subject,text):
-	import email.Encoders,email.MIMEText,encodings.ascii,popen2,sys,capisuite
+	import email.Encoders,email.MIMEText,encodings.ascii,smtplib,capisuite
 	# Create a text/plain message. Don't forget to change charset here
 	# if you want to use non-us-ascii characters in the mail!
-	msg = email.MIMEText.MIMEText(text)
 
+	msg = email.MIMEText.MIMEText(text)
 	msg['Subject'] = mail_subject
 	msg['From'] = mail_from
 	msg['To'] = mail_to
 
-	sendmail = popen2.Popen3("sendmail -t -f "+escape(mail_from))
-	if (sendmail.poll()!=-1):
-		capisuite.error("Error while calling sendmail. Not installed?\n")
-		return
-	sendmail.tochild.write(msg.as_string())
-	sendmail.tochild.close()
-	sendmail.fromchild.close()
-	ret=sendmail.wait()
-	if (ret!=0):
-		capisuite.error("Error while calling sendmail, return code="+str(ret))
+	try:
+		server = smtplib.SMTP('localhost')
+		server.sendmail(mail_from,mail_to,msg.as_string())
+		server.quit()
+	except Exception,e:
+		capisuite.error("Error while trying to send mail: %s" % e)
 	else:
-		capisuite.log("sendmail finished successful",3)
-
+		capisuite.log("mail sent successful",3)
 
 # @brief write description file for received fax or voice
 #

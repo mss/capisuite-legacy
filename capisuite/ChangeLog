@@ -8,6 +8,9 @@
 	* scripts/Makefile.am (.pyin.py): Choose the right sfftobmp call
 	  automatically during build.
 	* acinclude.m4 (CS_SET_DOCDIR,CS_TEST_GCC3): fix underquoted macros
+	* scripts/cs_helpers.pyin (sendMIMEMail,sendSimpleMail): use smtplib
+	  instead of manual call to sendmail as many reports showed that 
+	  calling sendmail doesn't work reliable on some systems
 
 2004-07-15  Gernot Hillier  <gernot@hillier.de>
 	* configure.in: support new parameter in ALERT_REQ of newer capi4linux
