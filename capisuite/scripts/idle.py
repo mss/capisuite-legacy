@@ -2,7 +2,7 @@
 #              ---------------------------------------------
 #    copyright            : (C) 2002 by Gernot Hillier
 #    email                : gernot@hillier.de
-#    version              : $Revision: 1.8.2.1 $
+#    version              : $Revision: 1.8.2.2 $
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ def idle(capi):
 		userdata=pwd.getpwnam(user)
 		outgoing_nr=cs_helpers.getOption(config,user,"outgoing_MSN","")
                 if (outgoing_nr==""):
-			incoming_nrs=config.get(user,"fax_numbers","")
+			incoming_nrs=cs_helpers.getOption(config,user,"fax_numbers","")
 			if (incoming_nrs==""):
 				continue
 			else:
@@ -163,6 +163,9 @@ def movejob(job,olddir,newdir,user):
 # History:
 #
 # $Log: idle.py,v $
+# Revision 1.8.2.2  2004/01/10 07:56:27  gernot
+# - fax_numbers is really allowed to miss now (taken from MAIN, 1.11)...
+#
 # Revision 1.8.2.1  2003/09/21 12:35:20  gernot
 # - add 0x349f to list of normal results
 #
