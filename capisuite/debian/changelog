@@ -1,3 +1,16 @@
+capisuite (0.4.3-1) unstable; urgency=low
+
+  * new upstream release.
+  * added fixes from 0.4 branch (see /usr/share/doc/capisuite/NEWS.gz).
+
+ -- Achim Bohnet <ach@mpe.mpg.de>  Tue, 26 Aug 2003 22:31:33 +0200
+
+capisuite (0.4.2-1) unstable; urgency=low
+
+  * new upstream release (see /usr/share/doc/capisuite/NEWS.gz).
+
+ -- Achim Bohnet <ach@mpe.mpg.de>  Mon, 28 Apr 2003 22:23:16 +0200
+
 capisuite (0.4.1a-1) unstable; urgency=low
 
   * new upstream release (see /usr/share/doc/capisuite/NEWS.gz).
