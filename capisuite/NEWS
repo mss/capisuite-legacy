@@ -1,5 +1,5 @@
-0.4.4 (CVS nn):
-===============
+0.4.4 (CVS tag CAPISUITE_044):
+==============================
 
 	* Makefiles: fixed "make" to not trying to create directories any more -
 	  this prevented normal users to call "make" sometimes (thx to Steffen
