@@ -20,6 +20,12 @@ files["8.2"]=basefiles+("fillup","insserv","sed","libacl","libattr","attr",\
 	     "acl","filesystem","libxcrypt","zlib","coreutils","pam-modules",\
 	     "permissions")+secondfiles+("bind9-utils",)
 
+files["9.0"]=("aaa_base","acl","attr","bash","bzip2","coreutils","db","devs",\
+              "diffutils","filesystem","fillup","glibc","grep","insserv",\
+              "libacl","libattr","libgcc","libxcrypt","m4","ncurses pam",\
+              "permissions","popt","readline","sed","shadow","tar","zlib","rpm")+\
+	      secondfiles+("bind-utils",)
+
 import sys,gzip,os,string
 
 # --- read commandline params ---
