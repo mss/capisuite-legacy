@@ -36,23 +36,31 @@ void* capi_exec_handler(void* args);
 
     This class is the main encapsulation to use the CAPI ISDN interface.
 
-    There are only a small subset of methods which are of use for the application layer. These are for general purposes like enabling
+    There are only a small subset of methods which are of use for the 
+    application layer. These are for general purposes like enabling
     listening to calls and getting some nice formatted info strings.
 
-    The biggest amount are shadow methods for nearly all CAPI messages, which do the dumb stuff like increasing message numbers,
-    testing for errors, building message structures and so on. Not each parameter of these is described in every detail here. 
-    For more details please have a look in the CAPI 2.0 specification, available from http://www.capi.org
+    The biggest amount are shadow methods for nearly all CAPI messages,
+    which do the dumb stuff like increasing message numbers, testing for 
+    errors, building message structures and so on. Not each parameter of these
+    is described in every detail here.  For more details please have a look in 
+    the CAPI 2.0 specification, available from http://www.capi.org.
 
-    There's also a big message handling routine (readMessage()) which calls special handlers for incoming messages of the CAPI.
+    There's also a big message handling routine (readMessage()) which calls 
+    special handlers for incoming messages of the CAPI.
 
-    A Capi object creates a new thread (with body run()) which waits for incoming messages in an endless loop and hands them to readMessage().
+    A Capi object creates a new thread (with body run()) which waits for 
+    incoming messages in an endless loop and hands them to readMessage().
 
-    This class only does the general things - for handling single connections see Connection. Connection objects will be automatically created
-    by this class for incoming connections and can be created manually to initiate an outgoing connection.
+    This class only does the general things - for handling single connections
+    see Connection. Connection objects will be automatically created by this 
+    class for incoming connections and can be created manually to initiate an 
+    outgoing connection.
 
     The application is supposed to create one single object of this class.
 
-    To communicate with the application via callback functions, the application must provide an implementation of the ApplicationInterface.
+    To communicate with the application via callback functions, the application
+    must provide an implementation of the ApplicationInterface.
     The methods of this interface are called when some special events are received.
 
     @author Gernot Hillier
@@ -70,13 +78,17 @@ class Capi {
 		    @param DDILength if ISDN interface is in PtP mode, the length of the DDI must be set here. 0 means disabled (PtMP)
 		    @param DDIBaseLength the base number length w/o extension (and w/o 0) if DDI is used
 		    @param DDIStopNumbers list of DDIs shorter than DDILength we will accept
-		    @param maxLogicalConnection max. number of logical connections we will handle
+		    @param maxLogicalConnection max. number of logical connections we will handle. 0 means autodetect.
         	    @param maxBDataBlocks max. number of unconfirmed B3-datablocks, 7  is the maximum supported by CAPI
 	 	    @param maxBDataLen max. B3-Datablocksize, 2048 is the maximum supported by CAPI
 		    @throw CapiError Thrown if no ISDN controller is reported by CAPI
 		    @throw CapiMsgError Thrown if registration at CAPI wasn't successful.
 		*/
-		Capi (ostream &debug, unsigned short debug_level, ostream &error, unsigned short DDILength=0, unsigned short DDIBaseLength=0, vector<string> DDIStopNumbers=vector<string>(), unsigned maxLogicalConnection=2, unsigned maxBDataBlocks=7,unsigned maxBDataLen=2048) throw (CapiError, CapiMsgError);
+		Capi (ostream &debug, unsigned short debug_level, ostream &error, 
+		  unsigned short DDILength=0, unsigned short DDIBaseLength=0, 
+		  vector<string> DDIStopNumbers=vector<string>(), 
+		  unsigned maxLogicalConnection=0, unsigned maxBDataBlocks=7,
+		  unsigned maxBDataLen=2048) throw (CapiError, CapiMsgError);
 
 		/** @brief Destructor. Unregister App at CAPI
 
@@ -154,7 +166,7 @@ class Capi {
 		     Fills the members profiles, capiVersion, capiManufacturer, numControllers
 		     @throw CapiMsgError Thrown when requesting information fails
 		*/
-		void readProfile() throw (CapiMsgError);
+		static void readProfile() throw (CapiMsgError);
 
 
 		/********************************************************************************/
@@ -415,15 +427,15 @@ class Capi {
 			bool suppServ; ///< does this controller support Supplementary Services?
 		};
 
-		short numControllers;  ///< number of installed controllers, set by readProfile() method
-                string capiManufacturer, ///< manufacturer of the general CAPI driver
+		static short numControllers;  ///< number of installed controllers, set by readProfile() method
+                static string capiManufacturer, ///< manufacturer of the general CAPI driver
 		       capiVersion; ///< version of the general CAPI driver
 
 		unsigned short DDILength; ///< length of extension number (DDI) when ISDN PtP mode is used (0=PtMP)
 		unsigned short DDIBaseLength; ///< base number length for the ISDN interface if PtP mode is used
 		vector<string> DDIStopNumbers; ///< list of DDIs shorten than DDILength we'll accept
 		
-		vector <CardProfileT> profiles; ///< vector containing profiles for all found cards (ATTENTION: starts with index 0,
+		static vector <CardProfileT> profiles; ///< vector containing profiles for all found cards (ATTENTION: starts with index 0,
 						///< while CAPI numbers controllers starting by 1 (sigh)
 
 		map <_cdword,Connection*> connections; ///< containing pointers to the currently active Connection
