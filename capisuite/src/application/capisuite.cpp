@@ -2,7 +2,7 @@
     @brief Contains CapiSuite - Main application class, implements ApplicationInterface
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.5.2.1 $
+    $Revision: 1.5.2.2 $
 */
 
 /***************************************************************************
@@ -73,7 +73,7 @@ CapiSuite::CapiSuite(int argc,char **argv)
 		(*error) << prefix() << "CapiSuite " << VERSION << " started." << endl;
 
 		// backend init
-		capi=new Capi(*debug,debug_level,*error,atoi(config["DDI_length"].c_str()),config["DDI_base"]);
+		capi=new Capi(*debug,debug_level,*error,atoi(config["DDI_length"].c_str()),atoi(config["DDI_base_length"].c_str()));
 		capi->registerApplicationInterface(this);
 
                 string info;
@@ -305,7 +305,8 @@ CapiSuite::readConfiguration()
 	checkOption("log_level","2");
 	checkOption("log_error",string(LOCALSTATEDIR)+"/log/capisuite.error");
 	checkOption("DDI_length","0");
-	checkOption("DDI_base","");
+	checkOption("DDI_base_length","0");
+	checkOption("DDI_stop_numbers","");
 	
 	string t(config["idle_script_interval"]);
 	for (int i=0;i<t.size();i++)
@@ -340,6 +341,11 @@ CapiSuite::readConfiguration()
 	for (int i=0;i<t.size();i++)
                 if (t[i]<'0' || t[i]>'9')
                         throw ApplicationError("Invalid DDI_length given.","main()");
+
+        t=config["DDI_base_length"];
+        for (int i=0;i<t.size();i++)
+                if (t[i]<'0' || t[i]>'9')
+                        throw ApplicationError("Invalid DDI_base_length given.","main()");
 
 	if (daemonmode) {
 		if (debug==&cout) {
@@ -405,6 +411,12 @@ CapiSuite::help()
 /* History
 
 $Log: capisuite.cpp,v $
+Revision 1.5.2.2  2003/11/02 14:58:16  gernot
+- use DDI_base_length instead of DDI_base
+- added DDI_stop_numbers option
+- use DDI_* options in the Connection class
+- call the Python script if number is complete
+
 Revision 1.5.2.1  2003/10/26 16:51:55  gernot
 - begin implementation of DDI, get DDI Info Elements
 

@@ -2,7 +2,7 @@
     @brief Contains Capi - Main Class for communication with CAPI
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.5.2.2 $
+    $Revision: 1.5.2.3 $
 */
 
 /***************************************************************************
@@ -31,9 +31,9 @@ void* capi_exec_handler(void* arg)
 	instance->run();
 }
 
-Capi::Capi (ostream& debug, unsigned short debug_level, ostream &error, unsigned short DDILength, string DDIBase, unsigned maxLogicalConnection, unsigned maxBDataBlocks,unsigned maxBDataLen) throw (CapiError, CapiMsgError)
+Capi::Capi (ostream& debug, unsigned short debug_level, ostream &error, unsigned short DDILength, unsigned short DDIBaseLength, unsigned maxLogicalConnection, unsigned maxBDataBlocks,unsigned maxBDataLen) throw (CapiError, CapiMsgError)
 :debug(debug),debug_level(debug_level),error(error),messageNumber(0),usedInfoMask(0x10),usedCIPMask(0),numControllers(0),
-DDILength(DDILength),DDIBase(DDIBase)
+DDILength(DDILength),DDIBaseLength(DDIBaseLength)
 {
 	if (debug_level >= 2)
 		debug << prefix() << "Capi object created" << endl;
@@ -552,7 +552,7 @@ Capi::readMessage (void) throw (CapiMsgError, CapiError, CapiWrongState, CapiExt
 							if (connections.count(plci)>0)
 								throw(CapiError("PLCI used twice from CAPI in CONNECT_IND","Capi::readMessage()"));
 							else {
-								Connection *c=new Connection(nachricht,this);
+								Connection *c=new Connection(nachricht,this,DDILength,DDIBaseLength);
 								connections[plci]=c;
 								if (!DDILength) // if we have PtP then wait until DDI is complete
 									application->callWaiting(c);
@@ -656,10 +656,15 @@ Capi::readMessage (void) throw (CapiMsgError, CapiError, CapiWrongState, CapiExt
 									_cdword plci=INFO_IND_PLCI(&nachricht);
 									if (debug_level >= 2)
 										debug << prefix() << "<INFO_IND: PLCI 0x" << hex << plci << ", InfoNumber CalledPartyNr " << endl;
+									
+									bool nrComplete;
 									if (connections.count(plci)==0)
 										throw(CapiError("PLCI unknown in INFO_IND","Capi::readMessage()"));
-									else
-										connections[plci]->info_ind_called_party_nr(nachricht);
+									else {
+										nrComplete=connections[plci]->info_ind_called_party_nr(nachricht);
+										if (nrComplete && DDILength)
+											application->callWaiting(connections[plci]);
+									}
 								} break;
 
 								default:
@@ -966,6 +971,12 @@ Capi::getInfo(bool verbose)
 /* History
 
 $Log: capi.cpp,v $
+Revision 1.5.2.3  2003/11/02 14:58:16  gernot
+- use DDI_base_length instead of DDI_base
+- added DDI_stop_numbers option
+- use DDI_* options in the Connection class
+- call the Python script if number is complete
+
 Revision 1.5.2.2  2003/11/01 22:59:33  gernot
 - read CalledPartyNr InfoElements
 

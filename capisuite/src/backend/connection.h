@@ -2,7 +2,7 @@
     @brief Contains Connection - Encapsulates a CAPI connection with all its states and methods.
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.6.2.2 $
+    $Revision: 1.6.2.3 $
 */
 
 /***************************************************************************
@@ -18,6 +18,7 @@
 #define CONNECTION_H
 
 #include <capi20.h>
+#include <vector>
 #include <string>
 #include <fstream>
 #include "capiexception.h"
@@ -70,8 +71,8 @@ class Connection
 
 		    This constructor is used when the application creates a Connection object manually to initiate an outgoing connection.
 
-		    It constructs the necessary information elements (B channel protocol settings, Number elements) and calls Capi::connect_req
-		    to initiate a call.
+		    It constructs the necessary information elements (B channel protocol settings, Number elements) and calls 
+		    Capi::connect_req to initiate a call.
 
 		    @param capi pointer to the Capi Object
 		    @param controller number of the controller which should initiate the call
@@ -359,8 +360,11 @@ class Connection
 
 		    @param message the received CONNECT_IND message
 		    @param capi pointer to the Capi Object
+		    @param DDILength set the length of DDI extension numbers (0=default means disable DDI)
+		    @param DDIBaseLength the length of the base number of the PtP interface
+		    @paran DDIStopNumbers a vector of strings listing complete DDI extension numbers which are shorter than DDILength 
 		*/
-		Connection (_cmsg& message, Capi *capi);
+		Connection (_cmsg& message, Capi *capi, unsigned short DDILength=0, unsigned short DDIBaseLength=0, std::vector<std::string> DDIStopNumbers=std::vector<std::string>());
 
 		/********************************************************************************/
     		/*	    methods handling CAPI messages - called by the Capi class		*/
@@ -435,9 +439,10 @@ class Connection
 		    *after* CONNECT_IND.
 
 		    @param message the received INFO_IND message
+		    @return true if the CalledPartyNumber is complete (DDI length fulfilled or stop_number found)
 		    @throw CapiWrongState Thrown when the message is received unexpected (i.e. in a wrong plci_state)
 		*/
-		void info_ind_called_party_nr(_cmsg& message) throw (CapiWrongState);
+		bool info_ind_called_party_nr(_cmsg& message) throw (CapiWrongState);
 
 		/** @brief called when we get DISCONNECT_B3_IND from CAPI
 
@@ -673,7 +678,11 @@ class Connection
 		unsigned short buffer_start, ///< holds the index for the first buffer currently used
 			buffers_used; ///< holds the number of currently used buffers
 
-		fax_info_t* fax_info;
+		fax_info_t* fax_info; ///< holds some data about fax connections
+
+		unsigned short DDILength; ///< the length of DDI extension numbers. 0 means DDI disabled
+		unsigned short DDIBaseLength; ///< the length of the base number for a PtP interface
+		vector<string> DDIStopNumbers; ///< list of complete DDI extensions shorter than DDILength
 };
 
 #endif
@@ -681,6 +690,12 @@ class Connection
 /*  History
 
 $Log: connection.h,v $
+Revision 1.6.2.3  2003/11/02 14:58:16  gernot
+- use DDI_base_length instead of DDI_base
+- added DDI_stop_numbers option
+- use DDI_* options in the Connection class
+- call the Python script if number is complete
+
 Revision 1.6.2.2  2003/11/01 22:59:33  gernot
 - read CalledPartyNr InfoElements
 

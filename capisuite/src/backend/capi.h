@@ -2,7 +2,7 @@
     @brief Contains Capi - Main Class for communication with CAPI
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.5.2.1 $
+    $Revision: 1.5.2.2 $
 */
 
 /***************************************************************************
@@ -68,14 +68,14 @@ class Capi {
 		    @param debug_level verbosity level for debug messages
 		    @param error reference to a ostream object where errors should be written to
 		    @param DDILength if ISDN interface is in PtP mode, the length of the DDI must be set here. 0 means disabled (PtMP)
-		    @param DDIBase the base number w/o extension (and w/o 0) if DDI is used
+		    @param DDIBaseLength the base number length w/o extension (and w/o 0) if DDI is used
 		    @param maxLogicalConnection max. number of logical connections we will handle
         	    @param maxBDataBlocks max. number of unconfirmed B3-datablocks, 7  is the maximum supported by CAPI
 	 	    @param maxBDataLen max. B3-Datablocksize, 2048 is the maximum supported by CAPI
 		    @throw CapiError Thrown if no ISDN controller is reported by CAPI
 		    @throw CapiMsgError Thrown if registration at CAPI wasn't successful.
 		*/
-		Capi (ostream &debug, unsigned short debug_level, ostream &error, unsigned short DDILength=0, string DDIBase="", unsigned maxLogicalConnection=2, unsigned maxBDataBlocks=7,unsigned maxBDataLen=2048) throw (CapiError, CapiMsgError);
+		Capi (ostream &debug, unsigned short debug_level, ostream &error, unsigned short DDILength=0, unsigned short DDIBaseLength=0, unsigned maxLogicalConnection=2, unsigned maxBDataBlocks=7,unsigned maxBDataLen=2048) throw (CapiError, CapiMsgError);
 
 		/** @brief Destructor. Unregister App at CAPI
 
@@ -419,7 +419,7 @@ class Capi {
 		       capiVersion; ///< version of the general CAPI driver
 
 		unsigned short DDILength; ///< length of extension number (DDI) when ISDN PtP mode is used (0=PtMP)
-		string DDIBase; ///< base number for the ISDN interface if PtP mode is used
+		unsigned short DDIBaseLength; ///< base number length for the ISDN interface if PtP mode is used
 		
 		vector <CardProfileT> profiles; ///< vector containing profiles for all found cards (ATTENTION: starts with index 0,
 						///< while CAPI numbers controllers starting by 1 (sigh)
@@ -446,6 +446,12 @@ class Capi {
 /*  History
 
 $Log: capi.h,v $
+Revision 1.5.2.2  2003/11/02 14:58:16  gernot
+- use DDI_base_length instead of DDI_base
+- added DDI_stop_numbers option
+- use DDI_* options in the Connection class
+- call the Python script if number is complete
+
 Revision 1.5.2.1  2003/10/26 16:51:55  gernot
 - begin implementation of DDI, get DDI Info Elements
 
