@@ -51,6 +51,20 @@ You can define how detailled the log output of CapiSuite will be\&. The default 
 \fBlog_error="/path/to/capisuite\&.error"\fR
 All errors which CapiSuite detects internally and in your scripts will end up here\&. They are written to an extra file so that they don't get lost in the normal log\&. Please check this log regularly for any messages \- especially when you encounter problems\&. Please report all messages you don't understand and which aren't caused by your own script\-modifications to the CapiSuite team\&.
 
+.TP
+\fBDDI_length="0"\fR
+When your ISDN card is connected to an ISDN interface in PtP mode, i\&.e\&. if you use DDI which, in understandable words mean you have only one ISDN phone number and can define your own extensions as you like, you have to set the length of your extension numbers here\&. In Germany, PtP mode is called "Anlagenanschluss"\&. Let's say you use 1234\-000 till 1234\-999, then your DDI_length would be 3\&. If you set this to 0, DDI/PtP is disabled\&.
+
+If you're not sure what all this should mean, then chances are high you don't use DDI and can leave this option as it is\&.
+
+.TP
+\fBDDI_base_length="0"\fR
+This option is only used when DDI_length is not 0\&. This is the length of your base number \- in the example above it would be 4\&.
+
+.TP
+\fBDDI_stop_numbers=""\fR
+If you usually use extension numbers of a specified length, but also want to use some shorter ones (e\&.g\&. the "\-0" extension for you switchboard), then you can list these shorter extensions here, separated by commas\&.
+
 .SH "SEE ALSO"
 
 .PP
