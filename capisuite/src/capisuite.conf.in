@@ -1,4 +1,4 @@
-# $Id: capisuite.conf.in,v 1.2 2003/03/20 09:15:53 gernot Exp $
+# $Id: capisuite.conf.in,v 1.2.2.1 2003/10/26 16:51:55 gernot Exp $
 #
 # This is the global configuration file for CapiSuite
 #
@@ -67,4 +67,20 @@ log_level="1"
 # Error messages are separated so you can easily find them.
 #
 log_error="@localstatedir@/log/capisuite.error"
+
+# DDI_base and DDI_length
+#
+# The following two options are only important if you've your ISDN card connected
+# to an ISDN interface which is configured in "Point to Point"-mode (in Germany
+# this is called "Anlagenanschluss" e.g.). This means you don't have several
+# specific numbers (so called MSNs) but only one base number and you can define
+# extensions as you like. As the length of these extensions is up to you, CapiSuite
+# can't know it. Therefore you must configure it here. If you don't understand what
+# I mean, chances are good you can leave the default values.
+# 
+# As an example, if you've numbers like 12345-123 and 12345-111, then your DDI_base
+# would be "12345" and your DDI_length would be 3. A value of 0 for DDI_length 
+# disables this feature (this is the default).
+DDI_length="0"
+DDI_base="" 
 

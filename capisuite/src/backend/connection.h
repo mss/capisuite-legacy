@@ -2,7 +2,7 @@
     @brief Contains Connection - Encapsulates a CAPI connection with all its states and methods.
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.6 $
+    $Revision: 1.6.2.1 $
 */
 
 /***************************************************************************
@@ -355,6 +355,7 @@ class Connection
 		    when we receive a CONNECT_IND message.
 
 		    It only extracts some data (numbers, services, etc.) from the message and saves it in private attributes.
+		    The answer to CONNECT_IND (i.e. CONNECT_RESP) is given later by the Connection object.
 
 		    @param message the received CONNECT_IND message
 		    @param capi pointer to the Capi Object
@@ -669,6 +670,9 @@ class Connection
 /*  History
 
 $Log: connection.h,v $
+Revision 1.6.2.1  2003/10/26 16:51:55  gernot
+- begin implementation of DDI, get DDI Info Elements
+
 Revision 1.6  2003/06/28 12:49:47  gernot
 - convert fax headline to CP437, so that german umlauts and other special
   characters will work now

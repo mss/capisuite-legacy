@@ -2,7 +2,7 @@
     @brief Contains Capi - Main Class for communication with CAPI
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.5 $
+    $Revision: 1.5.2.1 $
 */
 
 /***************************************************************************
@@ -31,8 +31,9 @@ void* capi_exec_handler(void* arg)
 	instance->run();
 }
 
-Capi::Capi (ostream& debug, unsigned short debug_level, ostream &error, unsigned maxLogicalConnection, unsigned maxBDataBlocks,unsigned maxBDataLen) throw (CapiError, CapiMsgError)
-:debug(debug),debug_level(debug_level),error(error),messageNumber(0),usedInfoMask(0x10),usedCIPMask(0),numControllers(0)
+Capi::Capi (ostream& debug, unsigned short debug_level, ostream &error, unsigned short DDILength, string DDIBase, unsigned maxLogicalConnection, unsigned maxBDataBlocks,unsigned maxBDataLen) throw (CapiError, CapiMsgError)
+:debug(debug),debug_level(debug_level),error(error),messageNumber(0),usedInfoMask(0x10),usedCIPMask(0),numControllers(0),
+DDILength(DDILength),DDIBase(DDIBase)
 {
 	if (debug_level >= 2)
 		debug << prefix() << "Capi object created" << endl;
@@ -44,6 +45,9 @@ Capi::Capi (ostream& debug, unsigned short debug_level, ostream &error, unsigned
 	unsigned info = capi20_register(maxLogicalConnection, maxBDataBlocks, maxBDataLen, &applId);
 	if (applId == 0 || info!=0)
         	throw (CapiMsgError(info,"Error while registering application: "+describeParamInfo(info),"Capi::Capi()"));
+
+	if (DDILength)
+		usedInfoMask|=0x80; // enable Called Party Number Info Element for PtP configuration
 
 	for (int i=1;i<=numControllers;i++)
 		listen_req(i, usedInfoMask, usedCIPMask); // can throw CapiMsgError
@@ -550,7 +554,8 @@ Capi::readMessage (void) throw (CapiMsgError, CapiError, CapiWrongState, CapiExt
 							else {
 								Connection *c=new Connection(nachricht,this);
 								connections[plci]=c;
-								application->callWaiting(c);
+								if (!DDILength) // if we have PtP then wait until DDI is complete
+									application->callWaiting(c);
 							}
 						} break;
 
@@ -951,6 +956,9 @@ Capi::getInfo(bool verbose)
 /* History
 
 $Log: capi.cpp,v $
+Revision 1.5.2.1  2003/10/26 16:51:55  gernot
+- begin implementation of DDI, get DDI Info Elements
+
 Revision 1.5  2003/04/17 10:39:42  gernot
 - support ALERTING notification (to know when it's ringing on the other side)
 - cosmetical fixes in capi.cpp
