@@ -32,6 +32,10 @@
 	  you'll have to adapt the function sfftotif at the beginning of
 	  cs_helpers.py manually.
 
+	* scripts: added new options "fax_email_from" and "voice_email_from" to
+	  answering_machine.conf and fax.conf (thx to Achim Bohnet for submitting
+	  a patch with this feature!; closes bug #46)
+
 	* Started detailed ChangeLog. From now on, only important changes from
 	  the user's point of view will be mentioned in this file. All details 
 	  will go to the "ChangeLog" file.

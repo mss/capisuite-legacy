@@ -141,6 +141,9 @@ def faxIncoming(call,call_from,call_to,curr_user,config,already_connected):
 		os.chmod(filename[:-3]+"txt",0600)
 		os.chown(filename[:-3]+"txt",userdata[2],userdata[3])
 
+		fromaddress=cs_helpers.getOption(config,curr_user,"fax_email_from","")
+		if (fromaddress==""):
+			fromaddress=curr_user
 		mailaddress=cs_helpers.getOption(config,curr_user,"fax_email","")
 		if (mailaddress==""):
 			mailaddress=curr_user
@@ -149,7 +152,7 @@ def faxIncoming(call,call_from,call_to,curr_user,config,already_connected):
 			capisuite.error("Warning: No valid fax_action definition found for user "+curr_user+" -> assuming SaveOnly")
 			action="saveonly"
 		if (action=="mailandsave"):
-			cs_helpers.sendMIMEMail(curr_user, mailaddress, "Fax received from "+call_from+" to "+call_to, faxFormat,
+			cs_helpers.sendMIMEMail(fromaddress, mailaddress, "Fax received from "+call_from+" to "+call_to, faxFormat,
 			  "You got a fax from "+call_from+" to "+call_to+"\nDate: "+time.ctime()+"\n\n"
 			  +"See attached file.\nThe original file was saved to file://"+filename+"\n\n", filename)
 
@@ -239,11 +242,14 @@ def voiceIncoming(call,call_from,call_to,curr_user,config):
 		os.chmod(filename[:-2]+"txt",0600)
 		os.chown(filename[:-2]+"txt",userdata[2],userdata[3])
 
+		fromaddress=cs_helpers.getOption(config,curr_user,"voice_email_from","")
+		if (fromaddress==""):
+			fromaddress=curr_user
 		mailaddress=cs_helpers.getOption(config,curr_user,"voice_email","")
 		if (mailaddress==""):
 			mailaddress=curr_user
 		if (action=="mailandsave"):
-			cs_helpers.sendMIMEMail(curr_user, mailaddress, "Voice call received from "+call_from+" to "+call_to, "la",
+			cs_helpers.sendMIMEMail(fromaddress, mailaddress, "Voice call received from "+call_from+" to "+call_to, "la",
 			  "You got a voice call from "+call_from+" to "+call_to+"\nDate: "+time.ctime()+"\n\n"
 			  +"See attached file.\nThe original file was saved to file://"+filename+"\n\n", filename)
 
