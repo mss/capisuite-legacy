@@ -24,4 +24,4 @@
 #DEFAULT (echo ""; id; echo %s; date; cat) >> $CVSROOT/CVSROOT/commitlog
 # or
 #DEFAULT (echo ""; id; echo %{sVv}; date; cat) >> $CVSROOT/CVSROOT/commitlog
-^capisuite          mail -s %s capisuite-devel@lists.berlios.de
+^capisuite          mail -s "[cvs msg] %{sVv}" capisuite-devel@lists.berlios.de
