@@ -1,6 +1,8 @@
 0.4.5 (NN):
 =========
 
+	* scripts: prevent cropping of fax pages by auto-scaling
+
 	* scripts: use a SMTP connection to localhost instead of calling the
 	  sendmail binary for sending mails. Many reports showed that calling
 	  sendmail manually doesn't work well on quite some systems

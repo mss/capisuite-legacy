@@ -11,6 +11,10 @@
 	* scripts/cs_helpers.pyin (sendMIMEMail,sendSimpleMail): use smtplib
 	  instead of manual call to sendmail as many reports showed that 
 	  calling sendmail doesn't work reliable on some systems
+	* scripts/cs_helpers.pyin (sendMIMEMail): add parameters to tiff2ps, gs
+	  and ps2pdf which prevent cropping of fax pages. Thanks to all the
+	  people who contributed suggestions and patches to bug #55.
+	* scripts/capisuitefax.in: Likewise.
 
 2004-07-15  Gernot Hillier  <gernot@hillier.de>
 	* configure.in: support new parameter in ALERT_REQ of newer capi4linux

@@ -185,7 +185,7 @@ def sendMIMEMail(mail_from,mail_to,mail_subject,mail_type,text,attachment):
 			# the first pipe must be handled by the shell so that the output of
 			# of ps2pdf can be read immediately. Handling this shell in Python
 			# leads to an overflow of the ps2pdf output pipe...
-			command="tiff2ps -a "+escape(basename+"tif")+" | ps2pdf - -"
+			command="tiff2ps -h11 -H12 -L.5 -w8.5 -a "+escape(basename+"tif")+" | ps2pdf -sPAPERSIZE=a4 - -"
 			tiff2pdf=popen2.Popen3(command)
 			if (tiff2pdf.poll()!=-1):
 				raise "conv-error","Error while calling tiff2ps or ps2pdf. Not installed?"
@@ -209,7 +209,7 @@ def sendMIMEMail(mail_from,mail_to,mail_subject,mail_type,text,attachment):
 			# the first pipe must be handled by the shell so that the output of
 			# of ps2pdf can be read immediately. Handling this shell in Python
 			# leads to an overflow of the ps2pdf output pipe...
-			command="ps2pdf "+escape(basename+"ps")+" -"
+			command="ps2pdf -sPAPERSIZE=a4 "+escape(basename+"ps")+" -"
 			ps2pdf=popen2.Popen3(command)
 			if (ps2pdf.poll()!=-1):
 				raise "conv-error","Error while calling ps2pdf. Not installed?"
