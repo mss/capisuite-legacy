@@ -2,7 +2,7 @@
     @brief Contains Connection - Encapsulates a CAPI connection with all its states and methods.
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.6.2.3 $
+    $Revision: 1.6.2.4 $
 */
 
 /***************************************************************************
@@ -362,7 +362,7 @@ class Connection
 		    @param capi pointer to the Capi Object
 		    @param DDILength set the length of DDI extension numbers (0=default means disable DDI)
 		    @param DDIBaseLength the length of the base number of the PtP interface
-		    @paran DDIStopNumbers a vector of strings listing complete DDI extension numbers which are shorter than DDILength 
+		    @param DDIStopNumbers a vector of strings listing complete DDI extension numbers which are shorter than DDILength 
 		*/
 		Connection (_cmsg& message, Capi *capi, unsigned short DDILength=0, unsigned short DDIBaseLength=0, std::vector<std::string> DDIStopNumbers=std::vector<std::string>());
 
@@ -690,6 +690,9 @@ class Connection
 /*  History
 
 $Log: connection.h,v $
+Revision 1.6.2.4  2003/11/11 21:05:41  gernot
+- fix typo in comment
+
 Revision 1.6.2.3  2003/11/02 14:58:16  gernot
 - use DDI_base_length instead of DDI_base
 - added DDI_stop_numbers option
