@@ -1,3 +1,16 @@
+0.4.5 (NN):
+=========
+
+	* Started detailed ChangeLog. From now on, only important changes from
+	  the user's point of view will be mentioned in this file. All details 
+	  will go to the "ChangeLog" file.
+	
+	* scripts: Adapted to work with the new parameters of sfftobmp 3.x.
+	  Normally, installed version will be detected automatically when 
+	  building CapiSuite. If you change your sfftobmp version later,  
+	  you'll have to adapt the function sfftotif at the beginning of
+	  cs_helpers.py manually.
+
 0.4.4 (CVS tag CAPISUITE_044):
 ==============================
 
@@ -27,7 +40,6 @@
 	  DDI_* options in capisuite.conf. Many thanks goes to Jörg Fester and
 	  the x-dot GmbH for paying and supporting me to develop this feature.
 	  They use CapiSuite in their product (see http://www.x-manage.de).
-
 
 0.4.3 (CVS tag CAPISUITE_043):
 ==============================

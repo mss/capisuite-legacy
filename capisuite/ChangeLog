@@ -1,0 +1,13 @@
+2004-11-07  Gernot Hillier  <gernot@hillier.de>
+	* configure.in: test for the sfftobmp version installed
+	* acinclude.m4 (CS_TEST_SFFTOBMP): Likewise.
+	* scripts/cs_helpers.pyin (sfftotiff,sendMIMEMail): New function which
+	  calls sfftobmp so that the parameters can be easily changed. Include
+	  two versions for sfftomp 2.x and 3.x. Thanks for reporting this
+	  issue goes to Edelhard Becker.
+	* scripts/Makefile.am (.pyin.py): Choose the right sfftobmp call
+	  automatically during build.
+	* acinclude.m4 (CS_SET_DOCDIR,CS_TEST_GCC3): fix underquoted macros
+
+2004-11-07  Gernot Hillier  <gernot@hillier.de>
+	* started ChangeLog
