@@ -2,7 +2,7 @@
     @brief Contains Connection - Encapsulates a CAPI connection with all its states and methods.
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.11.2.4 $
+    $Revision: 1.11.2.5 $
 */
 
 /***************************************************************************
@@ -608,6 +608,14 @@ Connection::info_ind_called_party_nr(_cmsg &message) throw (CapiWrongState)
 
 	call_to+=getNumber(INFO_IND_INFOELEMENT(&message),false);
 	
+	string currDDI=call_to.substr(DDIBaseLength);
+	for (int i=0;i<DDIStopNumbers.size();i++)
+	    if (DDIStopNumbers[i]==currDDI) {
+			if (debug_level >= 1)
+	    			debug << prefix() << "got DDI, nr is now " << call_to << " (complete,stop_nr)" << endl;
+			return true;
+	    }
+
 	if (call_to.length()>=DDIBaseLength+DDILength) {
 		if (debug_level >=1)
                 	debug << prefix() << "got DDI, nr is now " << call_to << " (complete)" << endl;
@@ -1115,6 +1123,9 @@ Connection::convertToCP437(string &text)
 /*  History
 
 $Log: connection.cpp,v $
+Revision 1.11.2.5  2003/11/06 18:32:15  gernot
+- implemented DDIStopNumbers
+
 Revision 1.11.2.4  2003/11/02 14:58:16  gernot
 - use DDI_base_length instead of DDI_base
 - added DDI_stop_numbers option

@@ -2,7 +2,7 @@
     @brief Contains CapiSuite - Main application class, implements ApplicationInterface
 
     @author Gernot Hillier <gernot@hillier.de>
-    $Revision: 1.5.2.2 $
+    $Revision: 1.5.2.3 $
 */
 
 /***************************************************************************
@@ -72,8 +72,22 @@ CapiSuite::CapiSuite(int argc,char **argv)
 		(*debug) << prefix() << "CapiSuite " << VERSION << " started." << endl;
 		(*error) << prefix() << "CapiSuite " << VERSION << " started." << endl;
 
+		string DDIStopListS=config["DDI_stop_numbers"];
+		vector<string> DDIStopList;
+		DDIStopList.push_back("");
+
+		int j=0;		
+		for (int i=0;i<DDIStopListS.length();i++) {
+		    if (DDIStopListS[i]==',') {
+			DDIStopList.push_back("");
+			j++;
+		    } else {
+			DDIStopList[j]+=DDIStopListS[i];
+		    }
+		}
+
 		// backend init
-		capi=new Capi(*debug,debug_level,*error,atoi(config["DDI_length"].c_str()),atoi(config["DDI_base_length"].c_str()));
+		capi=new Capi(*debug,debug_level,*error,atoi(config["DDI_length"].c_str()),atoi(config["DDI_base_length"].c_str()),DDIStopList);
 		capi->registerApplicationInterface(this);
 
                 string info;
@@ -311,7 +325,7 @@ CapiSuite::readConfiguration()
 	string t(config["idle_script_interval"]);
 	for (int i=0;i<t.size();i++)
 		if (t[i]<'0' || t[i]>'9')
-			throw ApplicationError("Invalid idle_script_interval given.","main()");
+			throw ApplicationError("Invalid idle_script_interval given.","readConfiguration()");
 
 	if (config["log_file"]!="" && config["log_file"]!="-") {
 		debug = new ofstream(config["log_file"].c_str(),ios::app);
@@ -340,13 +354,18 @@ CapiSuite::readConfiguration()
 	t=config["DDI_length"];
 	for (int i=0;i<t.size();i++)
                 if (t[i]<'0' || t[i]>'9')
-                        throw ApplicationError("Invalid DDI_length given.","main()");
+                        throw ApplicationError("Invalid DDI_length given.","readConfiguration()");
 
         t=config["DDI_base_length"];
         for (int i=0;i<t.size();i++)
                 if (t[i]<'0' || t[i]>'9')
-                        throw ApplicationError("Invalid DDI_base_length given.","main()");
+                        throw ApplicationError("Invalid DDI_base_length given.","readConfiguration()");
 
+        t=config["DDI_stop_numbers"];
+	for (int i=0;i<t.size();i++)
+                if ((t[i]<'0' || t[i]>'9') && t[i]!=',')
+                        throw ApplicationError("Invalid DDI_stop_numbers given.","readConfiguration()");
+			
 	if (daemonmode) {
 		if (debug==&cout) {
 			cerr << "FATAL error: not allowed to write to stdout in daemon mode." << endl;
@@ -411,6 +430,9 @@ CapiSuite::help()
 /* History
 
 $Log: capisuite.cpp,v $
+Revision 1.5.2.3  2003/11/06 18:32:15  gernot
+- implemented DDIStopNumbers
+
 Revision 1.5.2.2  2003/11/02 14:58:16  gernot
 - use DDI_base_length instead of DDI_base
 - added DDI_stop_numbers option
